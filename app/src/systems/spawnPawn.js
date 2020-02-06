@@ -27,15 +27,15 @@ export default function spawnPawn({ createEntity, gameEvents }) {
           head: {
             [pawnFacing.NORTH]: {
               '@id': `${randomHeadName}_${pawnFacing.NORTH}`,
-              '@value': new PIXI.Texture.fromBuffer(resources[`${randomHeadName}_${pawnFacing.NORTH}`], 192, 192),
+              '@value': new PIXI.Texture.from(resources[`${randomHeadName}_${pawnFacing.NORTH}`]),
             },
             [pawnFacing.SOUTH]: {
               '@id': `${randomHeadName}_${pawnFacing.SOUTH}`,
-              '@value': new PIXI.Texture.fromBuffer(resources[`${randomHeadName}_${pawnFacing.SOUTH}`], 192, 192),
+              '@value': new PIXI.Texture.from(resources[`${randomHeadName}_${pawnFacing.SOUTH}`]),
             },
             [pawnFacing.EAST]: {
               '@id': `${randomHeadName}_${pawnFacing.EAST}`,
-              '@value': new PIXI.Texture.fromBuffer(resources[`${randomHeadName}_${pawnFacing.EAST}`], 192, 192),
+              '@value': new PIXI.Texture.from(resources[`${randomHeadName}_${pawnFacing.EAST}`]),
             },
           },
           hair: {
