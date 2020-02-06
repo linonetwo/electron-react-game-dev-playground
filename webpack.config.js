@@ -43,6 +43,14 @@ module.exports = {
         resolve: {
           extensions: [".css"]
         }
+      },
+      {
+        test: /\.(png|jpe?g|gif)$/i,
+        use: [
+          {
+            loader: 'file-loader',
+          },
+        ],
       }
     ]
   }
