@@ -1,10 +1,10 @@
 const { app, protocol, BrowserWindow, session, ipcMain } = require('electron');
-const Protocol = require('./protocol');
-const MenuBuilder = require('./menu');
 const i18nextBackend = require('i18next-electron-fs-backend');
 const Store = require('secure-electron-store').default;
 const path = require('path');
 const fs = require('fs');
+const Protocol = require('./protocol');
+const MenuBuilder = require('./menu');
 require('./handlers');
 
 const isDev = process.env.NODE_ENV === 'development';
@@ -31,6 +31,7 @@ let menuBuilder;
 
 async function createWindow() {
   if (isDev) {
+    // very slow, and window won't open during the install
     await installExtensions();
   } else {
     // Needs to happen before creating/loading the browser window;
@@ -44,7 +45,7 @@ async function createWindow() {
     width: 800,
     height: 600,
     webPreferences: {
-      devTools: isDev,
+      devTools: true,
       nodeIntegration: false,
       nodeIntegrationInWorker: false,
       nodeIntegrationInSubFrames: false,
@@ -74,8 +75,8 @@ async function createWindow() {
   // Only do these things when in development
   if (isDev) {
     win.webContents.openDevTools();
-    require('electron-debug')(); // https://github.com/sindresorhus/electron-debug
   }
+  require('electron-debug')(); // https://github.com/sindresorhus/electron-debug
 
   // Emitted when the window is closed.
   win.on('closed', () => {
@@ -137,13 +138,7 @@ app.on('ready', createWindow);
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
-  // On macOS it is common for applications and their menu bar
-  // to stay active until the user quits explicitly with Cmd + Q
-  if (process.platform !== 'darwin') {
-    app.quit();
-  } else {
-    i18nextBackend.clearMainBindings(ipcMain);
-  }
+  app.quit();
 });
 
 app.on('activate', () => {
