@@ -1,7 +1,7 @@
 {
-  "name": "secure-electron-template",
+  "name": "electron-react-game-dev-playground",
   "version": "1.0.0",
-  "description": "The best way to build Electron apps with security in mind.",
+  "description": "Play with game development with electron and react pixi.",
   "private": true,
   "main": "app/electron/main.js",
   "scripts": {
@@ -20,7 +20,7 @@
     "dist-all": "npm run prod-build && electron-builder --mac --linux --windows"
   },
   "build": {
-    "productName": "YourProductName",
+    "productName": "ReactGameDemo",
     "appId": "com.yourcompany|electron.yourproductname",
     "directories": {
       "buildResources": "resources"
@@ -82,9 +82,12 @@
     "i18next": "^19.0.3",
     "i18next-electron-fs-backend": "^1.1.2",
     "lodash.merge": "^4.6.2",
+    "pixi.js": "^5.2.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
+    "react-entity-component-system": "^2.0.0",
     "react-i18next": "^11.2.7",
+    "react-pixi-fiber": "^0.13.0",
     "react-redux": "^7.1.3",
     "react-router": "^5.1.2",
     "react-router-dom": "^5.1.2",
