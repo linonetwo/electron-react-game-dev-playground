@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import Naked_Fat_south from './Naked_Fat_south.png';
 import Naked_Female_south from './Naked_Female_south.png';
 import Naked_Hulk_south from './Naked_Hulk_south.png';

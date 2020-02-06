@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import Female_Average_Normal_east from './Female_Average_Normal_east.png';
 import Female_Average_Pointy_south from './Female_Average_Pointy_south.png';
 import Female_Narrow_Normal_north from './Female_Narrow_Normal_north.png';

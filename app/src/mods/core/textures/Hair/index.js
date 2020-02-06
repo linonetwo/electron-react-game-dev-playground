@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import Bernadetta_east from './Bernadetta_east.png';
 import Caspar_north from './Caspar_north.png';
 import Dorothea_south from './Dorothea_south.png';
