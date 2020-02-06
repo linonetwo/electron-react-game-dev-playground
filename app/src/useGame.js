@@ -8,7 +8,7 @@ import {
 } from 'react-entity-component-system';
 
 /** Setup of game loop and ECS */
-export default function useGame(initialSystems: Function[], initialEntities: Object[]) {
+export default function useGame(initialSystems: Function[] = [], initialEntities: Object[] = []) {
   const [systems] = useState(initialSystems);
   const [entities, updater] = useEntityComponentSystem(
     initialEntities,
@@ -32,5 +32,5 @@ export default function useGame(initialSystems: Function[], initialEntities: Obj
   );
   useGameLoop(handleFrame);
 
-  return entities
+  return [entities, dispatchGameEvent]
 }

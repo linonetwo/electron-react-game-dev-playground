@@ -6,9 +6,7 @@ import { Stage } from 'react-pixi-fiber';
 import { changeMessage } from '../../redux/components/home/homeSlice';
 
 import HUD from '../../components/HUD';
-import { pawnEntity } from '../../components/pawn';
-import movement from '../../systems/movement';
-import pawnMovement from '../../systems/pawnMovement';
+import { initialSystems } from '../../systems';
 import useGame from '../../useGame';
 
 const Container = styled.div`
@@ -16,14 +14,13 @@ const Container = styled.div`
   height: 100vh;
 `;
 
-const initialEntities = [pawnEntity];
-const initialSystems = [movement, pawnMovement];
+const initialEntities = [];
 
 function Main(props) {
-  const entities = useGame(initialSystems, initialEntities);
+  const [entities, dispatchGameEvent] = useGame(initialSystems, initialEntities);
   return (
     <Container>
-      <HUD />
+      <HUD dispatchGameEvent={dispatchGameEvent} />
       <Stage options={{ backgroundColor: 0x10bb99, height: 600, width: 800 }}>
         {entities}
       </Stage>

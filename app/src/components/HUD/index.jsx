@@ -7,11 +7,19 @@ const Nav = styled.nav`
   height: 70px;
 `;
 const ReturnButton = styled.button``;
+const SpawnPawnButton = styled.button``;
 
-export default function HUD() {
+export default function HUD(props: {
+  dispatchGameEvent: (event: any) => void,
+}) {
   return (
     <Nav>
       <ReturnButton>Menu</ReturnButton>
+      <SpawnPawnButton
+        onClick={() => props.dispatchGameEvent({ type: 'spawn-pawn' })}
+      >
+        SpawnPawn
+      </SpawnPawnButton>
     </Nav>
   );
 }
