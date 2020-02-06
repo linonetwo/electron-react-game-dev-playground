@@ -1,68 +1,38 @@
-import React from "react";
-import { connect } from "react-redux";
-import { changeMessage } from "Redux/components/home/homeSlice";
-import { writeConfigRequest } from "secure-electron-store";
-import Detail from "Components/detail/detail";
-import "./main.css";
+// @flow
+import React from 'react';
+import { connect } from 'react-redux';
+import styled from 'styled-components';
+import { Stage } from 'react-pixi-fiber';
+import { changeMessage } from '../../redux/components/home/homeSlice';
 
-class Main extends React.Component {
-  constructor(props) {
-    super(props);
+import HUD from '../../components/HUD';
+import { pawnEntity } from '../../components/pawn';
+import movement from '../../systems/movement';
+import pawnMovement from '../../systems/pawnMovement';
+import useGame from '../../useGame';
 
-    this.state = {
-      message: ""
-    };
+const Container = styled.div`
+  width: 100vw;
+  height: 100vh;
+`;
 
-    this.onChangeMessage = this.onChangeMessage.bind(this);
-    this.onSubmitMessage = this.onSubmitMessage.bind(this);
-  }
+const initialEntities = [pawnEntity];
+const initialSystems = [movement, pawnMovement];
 
-  onChangeMessage(event) {
-    const { value } = event.target;
-    this.setState((state) => ({
-      message: value
-    }));
-  }
-
-  onSubmitMessage(event) {
-    event.preventDefault(); // prevent navigation
-    this.props.changeMessage(this.state.message); // update redux store
-    window.api.store.send(writeConfigRequest, "motd", this.state.message); // save message to store (persist)
-
-    // reset
-    this.setState((state) => ({
-      message: ""
-    }));
-  }
-
-  render() {
-    return (
-      <div id="main">
-        <div className="motd">{this.props.home.message}</div>
-        <br />
-        <div>
-          <form onSubmit={this.onSubmitMessage}>
-            <input
-              placeholder="New message of the day"
-              value={this.state.message}
-              onChange={this.onChangeMessage}></input>
-            <input type="submit" value="Save"></input>
-          </form>
-          <div className="tip">
-            Your message of the day will persist
-            <br /> if you close and re-open the app.
-          </div>
-        </div>
-        <div id="translation">
-          <Detail></Detail>
-        </div>
-      </div>
-    );
-  }
+function Main(props) {
+  const entities = useGame(initialSystems, initialEntities);
+  return (
+    <Container>
+      <HUD />
+      <Stage options={{ backgroundColor: 0x10bb99, height: 600, width: 800 }}>
+        {entities}
+      </Stage>
+    </Container>
+  );
 }
 
 const mapStateToProps = (state, props) => ({
-  home: state.home
+  home: state.home,
 });
 const mapDispatch = { changeMessage };
 
