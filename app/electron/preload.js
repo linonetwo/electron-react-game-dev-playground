@@ -14,5 +14,7 @@ contextBridge.exposeInMainWorld('api', {
 });
 
 contextBridge.exposeInMainWorld('mod', {
-  getTexture: textureIRI => ipcRenderer.invoke('get-texture', textureIRI),
+  getTexture: ({ modName, texturePath }) =>
+    ipcRenderer.invoke('get-texture', { modName, texturePath }),
+  getTextureIndex: () => ipcRenderer.invoke('get-texture-index'),
 });
