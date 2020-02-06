@@ -12,3 +12,7 @@ contextBridge.exposeInMainWorld('api', {
   i18nextElectronBackend: i18nextBackend.preloadBindings(ipcRenderer),
   store: store.preloadBindings(ipcRenderer, fs),
 });
+
+contextBridge.exposeInMainWorld('mod', {
+  getTexture: textureIRI => ipcRenderer.invoke('get-texture', textureIRI),
+});

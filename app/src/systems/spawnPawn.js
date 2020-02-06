@@ -4,6 +4,7 @@ import * as PIXI from 'pixi.js';
 import { Pawn, pawnFacing } from '../components/pawn';
 import type { PawnProps } from '../components/pawn';
 import coreTexture from '../mods/core/textures';
+import { resources } from '../resourcePool';
 
 function randomItem(items) {
   return items[Math.floor(Math.random() * items.length)];
@@ -26,21 +27,15 @@ export default function spawnPawn({ createEntity, gameEvents }) {
           head: {
             [pawnFacing.NORTH]: {
               '@id': `${randomHeadName}_${pawnFacing.NORTH}`,
-              '@value': new PIXI.Texture.from(
-                coreTexture.heads.female[`${randomHeadName}_${pawnFacing.NORTH}`],
-              ),
+              '@value': new PIXI.Texture.fromBuffer(resources[`${randomHeadName}_${pawnFacing.NORTH}`], 192, 192),
             },
             [pawnFacing.SOUTH]: {
               '@id': `${randomHeadName}_${pawnFacing.SOUTH}`,
-              '@value': new PIXI.Texture.from(
-                coreTexture.heads.female[`${randomHeadName}_${pawnFacing.SOUTH}`],
-              ),
+              '@value': new PIXI.Texture.fromBuffer(resources[`${randomHeadName}_${pawnFacing.SOUTH}`], 192, 192),
             },
             [pawnFacing.EAST]: {
               '@id': `${randomHeadName}_${pawnFacing.EAST}`,
-              '@value': new PIXI.Texture.from(
-                coreTexture.heads.female[`${randomHeadName}_${pawnFacing.EAST}`],
-              ),
+              '@value': new PIXI.Texture.fromBuffer(resources[`${randomHeadName}_${pawnFacing.EAST}`], 192, 192),
             },
           },
           hair: {

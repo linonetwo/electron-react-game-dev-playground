@@ -5,6 +5,7 @@ const i18nextBackend = require('i18next-electron-fs-backend');
 const Store = require('secure-electron-store').default;
 const path = require('path');
 const fs = require('fs');
+require('./handlers');
 
 const isDev = process.env.NODE_ENV === 'development';
 const port = 40992; // Hardcoded; needs to match webpack.development.js and package.json
@@ -166,7 +167,6 @@ app.on('web-contents-created', (event, contents) => {
       );
 
       event.preventDefault();
-      
     }
   });
 
@@ -181,7 +181,6 @@ app.on('web-contents-created', (event, contents) => {
       );
 
       event.preventDefault();
-      
     }
   });
 
@@ -203,7 +202,6 @@ app.on('web-contents-created', (event, contents) => {
     );
 
     event.preventDefault();
-    
   });
 });
 
