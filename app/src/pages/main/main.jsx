@@ -17,7 +17,10 @@ const Container = styled.div`
 const initialEntities = [];
 
 function Main(props) {
-  const [entities, dispatchGameEvent] = useGame(initialSystems, initialEntities);
+  const [entities, dispatchGameEvent] = useGame(
+    initialSystems,
+    initialEntities,
+  );
   return (
     <Container>
       <HUD dispatchGameEvent={dispatchGameEvent} />
