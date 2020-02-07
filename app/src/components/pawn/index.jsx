@@ -37,9 +37,9 @@ const TYPE = 'Rect';
 const behavior = {
   customDisplayObject: props => new PIXI.Graphics(),
   customApplyProps(instance, oldProps, newProps) {
-    const { fill, x, y, width, height, ...newPropsRest } = newProps;
+    const { lineStyle, x, y, width, height, ...newPropsRest } = newProps;
     const {
-      fill: oldFill,
+      lineStyle: oldLineStyle,
       x: oldX,
       y: oldY,
       width: oldWidth,
@@ -49,9 +49,8 @@ const behavior = {
     if (typeof oldProps !== 'undefined') {
       instance.clear();
     }
-    instance.beginFill(fill);
+    instance.lineStyle(1, lineStyle.color, 0.6);
     instance.drawRect(x, y, width, height);
-    instance.endFill();
 
     this.applyDisplayObjectProps(oldPropsRest, newPropsRest);
   },
@@ -75,7 +74,7 @@ export function Pawn(props: PawnProps) {
         y={props.y - props.collider.height / 2}
         width={props.collider.width}
         height={props.collider.height}
-        fill="#66ccff"
+        lineStyle={{ color: 0x66ccff }}
       />
       <Sprite
         anchor={centerAnchor}
@@ -98,7 +97,12 @@ export function Pawn(props: PawnProps) {
         scale={{ x: flipLeftRight ? -1 : 1, y: 1 }}
         texture={props.texture.hair[facing]['@value']}
       />
-<Text text={`x: ${props.x} y: ${props.y}`} style={{ fill: 'white', align: 'center' }} x={props.x} y={props.y} />
+      <Text
+        text={`x: ${props.x} y: ${props.y}`}
+        style={{ fill: 'white', align: 'center' }}
+        x={props.x - props.collider.width / 2}
+        y={props.y - props.collider.height / 2}
+      />
     </Container>
   );
 }
