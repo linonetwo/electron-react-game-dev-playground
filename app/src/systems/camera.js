@@ -6,8 +6,8 @@ export default function camera({ entities, keysDown }) {
   if (camera) {
     if (protagonistPawn) {
       // with protagonist, we center our view around the character
-      camera.x = protagonistPawn.x;
-      camera.y = protagonistPawn.y;
+      camera.x += Math.floor((protagonistPawn.x - camera.x) / 2);
+      camera.y += Math.floor((protagonistPawn.y - camera.y) / 2);
     } else {
       // without protagonist, we follow the arrow keys
       if (keysDown.includes('ArrowLeft')) {
