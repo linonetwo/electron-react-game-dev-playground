@@ -10,3 +10,4 @@ I use following resources in this demo, I can replace them if I violates your CC
 [Gloomy Face mk2](https://steamcommunity.com/sharedfiles/filedetails/?id=1870677788)
 [FE3H Black Eagles Hair](https://steamcommunity.com/sharedfiles/filedetails/?id=1962075314)
 [SZ_Floors](https://steamcommunity.com/sharedfiles/filedetails/?id=1874668171)
+[VGP Xtra Trees and Flowers](https://steamcommunity.com/sharedfiles/filedetails/?id=1185281838)

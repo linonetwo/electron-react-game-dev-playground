@@ -22,6 +22,34 @@
     "TRIANGLE",
     "TWISTA"
   ],
+  "flowers": {
+    "AlliumGiganteum": ["AlliumGiganteumA", "AlliumGiganteumB"],
+    "Anthurium": [
+      "AnthuriumA",
+      "AnthuriumB",
+      "AnthuriumC",
+      "AnthuriumD",
+      "AnthuriumE",
+      "AnthuriumF"
+    ],
+    "NymphHair": [
+      "Nymph_Hair_Plant_A",
+      "Nymph_Hair_Plant_B",
+      "Nymph_Hair_Plant_C"
+    ],
+    "PinkRimstalk": ["PinkRimstalkA", "PinkRimstalkB", "PinkRimstalkC"],
+    "Plumeria": ["PlumeriaA", "PlumeriaB", "PlumeriaC"],
+    "Sunflower": ["SunflowerA", "SunflowerB"]
+  },
+  "tree": {
+    "RedMaple": ["RedMaple_a", "RedMaple_b", "RedMaple_c"],
+    "TreeAcacia": ["TreeAcacia"],
+    "TreeCamellia": ["TreeCamelliaA"],
+    "TreeCherryBlossom": ["TreeCherryBlossomA"],
+    "TreeJapaneseMaple": ["TreeJapaneseMapleA"],
+    "TreeCherryBlossom_Leafless": ["TreeCherryBlossom_Leafless"],
+    "TreeJapaneseMaple_Leafless": ["TreeJapaneseMaple_Leafless"]
+  },
   "hair": [
     "Bernadetta",
     "Caspar",

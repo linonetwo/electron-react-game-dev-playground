@@ -37,6 +37,28 @@ window.mod.getTextureIndex().then(allTextureIndex => {
         resources[resourceDetailName] = resourceBuffer;
       }
     });
+    Object.keys(allTextureIndex[modName].flowers).forEach(async resourceName => {
+      for (const resourceDetailName of allTextureIndex[modName].flowers[
+        resourceName
+      ]) {
+        const resourceBuffer = await window.mod.getTexture({
+          modName,
+          texturePath: `flowers/${resourceName}/${resourceDetailName}.png`,
+        });
+        resources[resourceDetailName] = resourceBuffer;
+      }
+    });
+    Object.keys(allTextureIndex[modName].tree).forEach(async resourceName => {
+      for (const resourceDetailName of allTextureIndex[modName].tree[
+        resourceName
+      ]) {
+        const resourceBuffer = await window.mod.getTexture({
+          modName,
+          texturePath: `tree/${resourceName}/${resourceDetailName}.png`,
+        });
+        resources[resourceDetailName] = resourceBuffer;
+      }
+    });
     allTextureIndex[modName].floors.forEach(async resourceName => {
       const resourceBuffer = await window.mod.getTexture({
         modName,
