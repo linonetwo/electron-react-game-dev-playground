@@ -25,7 +25,7 @@ function filterHUDEntities(entities: Element<any>[]): Object[] {
 }
 
 const containerID = 'game-container';
-function Main(props) {
+function Main() {
   const [entities, dispatchGameEvent] = useGame(
     initialSystems,
     initialEntities,
@@ -78,6 +78,7 @@ function Main(props) {
         items={entitiesUnderMouse.map(entity => ({
           title: entity.name,
           type: entity['@type'],
+          icon: 'people',
         }))}
         position={mouseEntity || { x: 0, y: 0 }}
         mountPoint={containerID}
@@ -86,7 +87,7 @@ function Main(props) {
   );
 }
 
-const mapStateToProps = (state, props) => ({
+const mapStateToProps = (state) => ({
   home: state.home,
 });
 const mapDispatch = { changeMessage };

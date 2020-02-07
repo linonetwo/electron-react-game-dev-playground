@@ -1,11 +1,11 @@
 // @flow
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import is from 'styled-is';
 import ReactDOM from 'react-dom';
 import { search } from 'fast-fuzzy';
+import { Menu, MenuItem } from "@blueprintjs/core";
 
-export type MenuItem = {
+export type IMenuItem = {
   title: string,
   type: string,
   icon?: string,
@@ -19,45 +19,24 @@ const MenuContainer = styled.div`
   left: ${({ left }: MenuContainerProps) => left || '-10000px'};
   z-index: 100;
 
-  /* margin between buttons */
-  display: flex;
-  flex-direction: column;
-
-  height: ${menuHeight}px;
-  padding: 8px 7px 6px;
-  background-color: white;
-  box-shadow: 0px 0px 8px 0px rgba(51, 51, 51, 0.6);
-  border-radius: 4px;
   opacity: ${({ opacity }) => opacity || 0};
   transition: opacity 0.25s;
-  overflow: scroll;
 
-  ::-webkit-scrollbar {
-    width: 0px; /* Remove scrollbar space */
-    background: transparent; /* Optional: just make scrollbar invisible */
-  }
-`;
-
-const MenuButton = styled.span`
-  cursor: pointer;
-
-  & .type {
-    color: #aaa;
-    font-weight: ${is('active')`800`};
-    font-size: 18px;
-    vertical-align: text-bottom;
+  ul.bp3-menu {
+    max-height: ${menuHeight}px;
+    overflow-y: auto;
   }
 `;
 
 export type HoverMenuProps = {
   open?: boolean,
   mountPoint: string,
-  items: MenuItem[],
+  items: IMenuItem[],
   position: { x: ?number, y: ?number },
 };
 type HoverMenuState = {
   filter: string,
-  items: MenuItem[],
+  items: IMenuItem[],
   position: {
     x: number,
     y: number,
@@ -94,7 +73,7 @@ export default class HoverMenu extends Component<
   /**
    * When a mark button is clicked, toggle the current mark.
    */
-  onClickMark = (item: MenuItem, event: SyntheticEvent<*>) => {
+  onClickMark = (item: IMenuItem, event: SyntheticEvent<*>) => {
     event.preventDefault();
     event.stopPropagation();
   };
@@ -102,16 +81,15 @@ export default class HoverMenu extends Component<
   /**
    * Render a mark-toggling toolbar button.
    */
-  renderMarkButton = (item: MenuItem) => {
+  renderMarkButton = (item: IMenuItem) => {
+    const text = `${item.title}${item.type ? ` ${item.type}` : ''}`;
     return (
-      <MenuButton
-        key={`${item.title}${item.type ? ` ${item.type}` : ''}`}
+      <MenuItem
+        key={text}
+        text={text}
+        icon={item.icon}
         onMouseDown={event => this.onClickMark(item, event)}
-      >
-        {item.title && <span className="title">{item.title}</span>}
-        {item.type && <span className="type">{item.type}</span>}
-        {item.icon && <span className="icon">{item.icon}</span>}
-      </MenuButton>
+       />
     );
   };
 
@@ -154,7 +132,7 @@ export default class HoverMenu extends Component<
       const itemsToDisplay =
         this.state.filter.length > 0
           ? search(this.state.filter, this.state.items, {
-              keySelector: (item: MenuItem) => item.type,
+              keySelector: (item: IMenuItem) => item.type,
             })
           : this.state.items;
       return ReactDOM.createPortal(
@@ -167,8 +145,11 @@ export default class HoverMenu extends Component<
             this.menuRef = elem;
           }}
         >
-          {this.state.filter}
+        <Menu>
+
           {itemsToDisplay.map(this.renderMarkButton)}
+        </Menu>
+          {this.state.filter}
         </MenuContainer>,
         mountPoint,
       );

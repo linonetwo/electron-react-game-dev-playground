@@ -1,4 +1,3 @@
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const path = require('path');
 
 module.exports = {
@@ -33,22 +32,25 @@ module.exports = {
       // loads .css files
       {
         test: /\.css$/,
-        include: [path.resolve(__dirname, 'app/src')],
-        use: [
-          MiniCssExtractPlugin.loader,
-          {
-            loader: 'css-loader',
-          },
-        ],
-        resolve: {
-          extensions: ['.css'],
-        },
+        loader: 'style-loader!css-loader',
       },
       {
         test: /\.(png|jpe?g|gif)$/i,
         use: [
           {
             loader: 'file-loader',
+          },
+        ],
+      },
+      {
+        test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name].[ext]',
+              outputPath: 'fonts/',
+            },
           },
         ],
       },

@@ -1,6 +1,8 @@
 /* eslint no-unused-expressions: "off" */
 import { createGlobalStyle } from 'styled-components';
 import styledNormalize from 'styled-normalize';
+import '@blueprintjs/icons/lib/css/blueprint-icons.css';
+import '@blueprintjs/core/lib/css/blueprint.css';
 
 export default createGlobalStyle`
   ${styledNormalize};

@@ -1,4 +1,4 @@
-const { Menu, MenuItem, BrowserWindow } = require('electron');
+const { Menu, IMenuItem, BrowserWindow } = require('electron');
 const i18nBackend = require('i18next-electron-fs-backend');
 const whitelist = require('../localization/whitelist');
 
