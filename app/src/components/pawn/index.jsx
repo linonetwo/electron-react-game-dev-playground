@@ -1,19 +1,15 @@
 // @flow
 import React from 'react';
-import { Sprite, Container } from 'react-pixi-fiber';
+import { Sprite, Container, CustomPIXIComponent, Text } from 'react-pixi-fiber';
 import * as PIXI from 'pixi.js';
 
-const headCenterAnchor = new PIXI.Point(0.5, 0.5);
-const bodyCenterAnchor = new PIXI.Point(0.5, headCenterAnchor.y - 0.2);
+const centerAnchor = new PIXI.Point(0.5, 0.5);
 
-export const pawnFacing = {
-  NORTH: 'north',
-  SOUTH: 'south',
-  WEST: 'west',
-  EAST: 'east',
-};
+export type PawnTextureFacing = 'north' | 'south' | 'east' | 'west';
+export type PawnFacing = PawnTextureFacing | 'west';
 export type PawnProps = {
-  facing: $Values<pawnFacing>,
+  '@type': string,
+  facing: PawnFacing,
   texture: {|
     body: {|
       east: {| '@id': string, '@value': PIXI.Texture |},
@@ -31,39 +27,78 @@ export type PawnProps = {
       south: {| '@id': string, '@value': PIXI.Texture |},
     |},
   |},
+  collider: { type: string, width: number, height: number },
   x: number,
   y: number,
 };
+export type PawnPropsWithRenderer = PawnProps & { Renderer: Function };
+
+const TYPE = 'Rect';
+const behavior = {
+  customDisplayObject: props => new PIXI.Graphics(),
+  customApplyProps(instance, oldProps, newProps) {
+    const { fill, x, y, width, height, ...newPropsRest } = newProps;
+    const {
+      fill: oldFill,
+      x: oldX,
+      y: oldY,
+      width: oldWidth,
+      height: oldHeight,
+      ...oldPropsRest
+    } = oldProps || {};
+    if (typeof oldProps !== 'undefined') {
+      instance.clear();
+    }
+    instance.beginFill(fill);
+    instance.drawRect(x, y, width, height);
+    instance.endFill();
+
+    this.applyDisplayObjectProps(oldPropsRest, newPropsRest);
+  },
+};
+
+const ColliderBox = CustomPIXIComponent(behavior, TYPE);
+
 export function Pawn(props: PawnProps) {
   let { facing } = props;
   let flipLeftRight = false;
-  if (facing === pawnFacing.WEST) {
-    facing = pawnFacing.EAST;
+  if (facing === 'west') {
+    facing = 'east';
+    (facing: PawnTextureFacing);
     flipLeftRight = true;
   }
+  const headHeight = 50;
   return (
     <Container>
+      <ColliderBox
+        x={props.x - props.collider.width / 2}
+        y={props.y - props.collider.height / 2}
+        width={props.collider.width}
+        height={props.collider.height}
+        fill="#66ccff"
+      />
       <Sprite
-        anchor={bodyCenterAnchor}
+        anchor={centerAnchor}
         x={props.x}
         y={props.y}
         scale={{ x: flipLeftRight ? -1 : 1, y: 1 }}
         texture={props.texture.body[facing]['@value']}
       />
       <Sprite
-        anchor={headCenterAnchor}
+        anchor={centerAnchor}
         x={props.x}
-        y={props.y}
+        y={props.y - headHeight}
         scale={{ x: flipLeftRight ? -1 : 1, y: 1 }}
         texture={props.texture.head[facing]['@value']}
       />
       <Sprite
-        anchor={headCenterAnchor}
+        anchor={centerAnchor}
         x={props.x}
-        y={props.y}
+        y={props.y - headHeight}
         scale={{ x: flipLeftRight ? -1 : 1, y: 1 }}
         texture={props.texture.hair[facing]['@value']}
       />
+<Text text={`x: ${props.x} y: ${props.y}`} style={{ fill: 'white', align: 'center' }} x={props.x} y={props.y} />
     </Container>
   );
 }

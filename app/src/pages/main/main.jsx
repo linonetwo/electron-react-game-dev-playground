@@ -5,8 +5,9 @@ import styled from 'styled-components';
 import { Stage } from 'react-pixi-fiber';
 import { changeMessage } from '../../redux/components/home/homeSlice';
 
-import HUD from '../../components/HUD';
+import HUD, { filterHUDEntities } from '../../components/HUD';
 import { initialSystems } from '../../systems';
+import { initialEntities } from '../../entites';
 import useGame from '../../useGame';
 
 const Container = styled.div`
@@ -14,17 +15,29 @@ const Container = styled.div`
   height: 100vh;
 `;
 
-const initialEntities = [];
-
 function Main(props) {
   const [entities, dispatchGameEvent] = useGame(
     initialSystems,
     initialEntities,
   );
+
   return (
     <Container>
-      <HUD dispatchGameEvent={dispatchGameEvent} />
-      <Stage options={{ backgroundColor: 0x10bb99, height: 600, width: 800 }}>
+      <HUD
+        dispatchGameEvent={dispatchGameEvent}
+        entities={filterHUDEntities(entities)}
+      />
+      <Stage
+        onMouseMove={event => {
+          dispatchGameEvent({
+            type: 'mouse-move',
+            x: event.clientX,
+            y: event.clientY,
+          });
+        }}
+        options={{ backgroundColor: 0x10bb99, height: window.innerHeight, width: window.innerWidth }}
+        onContextMenu={event => event.preventDefault()}
+      >
         {entities}
       </Stage>
     </Container>

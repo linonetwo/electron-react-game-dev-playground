@@ -1,8 +1,8 @@
 // @flow
 import React from 'react';
 import * as PIXI from 'pixi.js';
-import { Pawn, pawnFacing } from '../components/pawn';
-import type { PawnProps } from '../components/pawn';
+import { Pawn } from '../components/pawn';
+import type { PawnProps, PawnPropsWithRenderer } from '../components/pawn';
 import { resources } from '../resourcePool';
 
 function randomItem(items) {
@@ -15,71 +15,71 @@ export default function spawnPawn({ createEntity, gameEvents }) {
       const randomHeadName = randomItem(resources.index.core.heads.female);
       const randomHairName = randomItem(resources.index.core.hair);
       const randomBodyName = randomItem(resources.index.core.bodies);
-      const pawnEntity = {
-        name: 'protagonistPawn',
+      const pawnEntity: PawnPropsWithRenderer = {
+        '@type': 'protagonistPawn',
         Renderer: (props: PawnProps) => <Pawn {...props} />,
         x: 200,
         y: 200,
-        collider: { type: 'block', width: 64, height: 32 },
-        facing: pawnFacing.SOUTH,
+        collider: { type: 'block', width: 150, height: 200 },
+        facing: 'south',
         texture: {
           head: {
-            [pawnFacing.NORTH]: {
-              '@id': `${randomHeadName}_${pawnFacing.NORTH}`,
+            north: {
+              '@id': `${randomHeadName}_${'north'}`,
               '@value': new PIXI.Texture.from(
-                resources[`${randomHeadName}_${pawnFacing.NORTH}`],
+                resources[`${randomHeadName}_${'north'}`],
               ),
             },
-            [pawnFacing.SOUTH]: {
-              '@id': `${randomHeadName}_${pawnFacing.SOUTH}`,
+            south: {
+              '@id': `${randomHeadName}_${'south'}`,
               '@value': new PIXI.Texture.from(
-                resources[`${randomHeadName}_${pawnFacing.SOUTH}`],
+                resources[`${randomHeadName}_${'south'}`],
               ),
             },
-            [pawnFacing.EAST]: {
-              '@id': `${randomHeadName}_${pawnFacing.EAST}`,
+            east: {
+              '@id': `${randomHeadName}_${'east'}`,
               '@value': new PIXI.Texture.from(
-                resources[`${randomHeadName}_${pawnFacing.EAST}`],
+                resources[`${randomHeadName}_${'east'}`],
               ),
             },
           },
           hair: {
-            [pawnFacing.NORTH]: {
-              '@id': `${randomHairName}_${pawnFacing.NORTH}`,
+            north: {
+              '@id': `${randomHairName}_${'north'}`,
               '@value': new PIXI.Texture.from(
-                resources[`${randomHairName}_${pawnFacing.NORTH}`],
+                resources[`${randomHairName}_${'north'}`],
               ),
             },
-            [pawnFacing.SOUTH]: {
-              '@id': `${randomHairName}_${pawnFacing.SOUTH}`,
+            south: {
+              '@id': `${randomHairName}_${'south'}`,
               '@value': new PIXI.Texture.from(
-                resources[`${randomHairName}_${pawnFacing.SOUTH}`],
+                resources[`${randomHairName}_${'south'}`],
               ),
             },
-            [pawnFacing.EAST]: {
-              '@id': `${randomHairName}_${pawnFacing.EAST}`,
+            east: {
+              '@id': `${randomHairName}_${'east'}`,
               '@value': new PIXI.Texture.from(
-                resources[`${randomHairName}_${pawnFacing.EAST}`],
+                resources[`${randomHairName}_${'east'}`],
               ),
             },
           },
           body: {
-            [pawnFacing.NORTH]: {
-              '@id': `${randomBodyName}_${pawnFacing.NORTH}`,
+            north: {
+              '@id': `${randomBodyName}_${'north'}`,
               '@value': new PIXI.Texture.from(
-                resources[`${randomBodyName}_${pawnFacing.NORTH}`],
+                resources[`${randomBodyName}_${'north'}`],
               ),
             },
-            [pawnFacing.SOUTH]: {
-              '@id': `${randomBodyName}_${pawnFacing.SOUTH}`,
+            south: {
+              '@id': `${randomBodyName}_${'south'}`,
               '@value': new PIXI.Texture.from(
-                resources[`${randomBodyName}_${pawnFacing.SOUTH}`],
+                resources[`${randomBodyName}_${'south'}`],
               ),
             },
-            [pawnFacing.EAST]: {
-              '@id': `${randomBodyName}_${pawnFacing.EAST}`,
+            east: {
+              '@id': `${randomBodyName}_${'east'}`,
               '@value': new PIXI.Texture.from(
-                resources[`${randomBodyName}_${pawnFacing.EAST}`],
+                resources[`${randomBodyName}_${'east'}`],
               ),
             },
           },

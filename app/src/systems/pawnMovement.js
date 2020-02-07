@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 export default function pawnMovement({ entities, keysDown }) {
   entities
-    .filter(e => e.name === 'protagonistPawn')
+    .filter(e => e['@type'] === 'protagonistPawn')
     .forEach(pawn => {
       if (keysDown.includes('ArrowLeft') && pawn.x > 0) {
         pawn.x -= 8;
