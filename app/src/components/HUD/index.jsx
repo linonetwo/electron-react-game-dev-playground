@@ -12,6 +12,7 @@ import {
   Switch,
   Popover,
 } from '@blueprintjs/core';
+import { connect } from 'react-redux';
 
 import getDebugMenu from './getDebugMenu';
 
@@ -20,7 +21,20 @@ const DebugSwitch = styled(Switch)`
   margin-left: 10px;
 `;
 
-export default function HUD(props: {
+const mapState = ({ debug: { inDebugMode } }) => ({
+  inDebugMode,
+});
+
+const mapDispatch = ({ debug: { toggleDebugMode } }) => ({
+  toggleDebugMode,
+});
+
+export default connect(
+  mapState,
+  mapDispatch,
+)(function HUD(props: {
+  inDebugMode: boolean,
+  toggleDebugMode: () => void,
   dispatchGameEvent: (event: any) => void,
 }) {
   return (
@@ -36,11 +50,15 @@ export default function HUD(props: {
           icon="user"
           text="Spawn Pawn"
         />
-        <DebugSwitch checked={true} label="Debug" onChange={() => {}} />
+        <DebugSwitch
+          checked={props.inDebugMode}
+          label="Debug"
+          onChange={props.toggleDebugMode}
+        />
       </NavbarGroup>
       <NavbarGroup align={Alignment.RIGHT}>
         <Button className={Classes.MINIMAL} icon="cog" />
       </NavbarGroup>
     </Navbar>
   );
-}
+});

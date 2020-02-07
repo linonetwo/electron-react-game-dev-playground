@@ -1,10 +1,9 @@
 // @flow
 import React, { useState } from 'react';
 import type { Element } from 'react';
-import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { Stage } from 'react-pixi-fiber';
-import { changeMessage } from '../../redux/components/home/homeSlice';
+import { ReactReduxContext, Provider } from 'react-redux';
 
 import HUD from '../../components/HUD';
 import ContextMenu from '../../components/ContextMenu';
@@ -25,7 +24,7 @@ function filterHUDEntities(entities: Element<any>[]): Object[] {
 }
 
 const containerID = 'game-container';
-function Main() {
+export default function Main() {
   const [entities, dispatchGameEvent] = useGame(
     initialSystems,
     initialEntities,
@@ -45,33 +44,37 @@ function Main() {
   return (
     <Container id={containerID}>
       <HUD dispatchGameEvent={dispatchGameEvent} />
-      <Stage
-        onMouseMove={event => {
-          dispatchGameEvent({
-            type: 'mouse-move',
-            x: event.clientX,
-            y: event.clientY,
-          });
-        }}
-        options={{
-          backgroundColor: 0x10bb99,
-          height: window.innerHeight,
-          width: window.innerWidth,
-        }}
-        onContextMenu={event => {
-          event.preventDefault();
-          // reopen the menu to refresh its props
-          contextMenuIsOpenSetter(false);
-          setImmediate(() => {
-            contextMenuIsOpenSetter(true);
-          });
-        }}
-        onClick={() => {
-          contextMenuIsOpenSetter(false);
-        }}
-      >
-        {entities}
-      </Stage>
+      <ReactReduxContext.Consumer>
+        {({ store }) => (
+          <Stage
+            onMouseMove={event => {
+              dispatchGameEvent({
+                type: 'mouse-move',
+                x: event.clientX,
+                y: event.clientY,
+              });
+            }}
+            options={{
+              backgroundColor: 0x10bb99,
+              height: window.innerHeight,
+              width: window.innerWidth,
+            }}
+            onContextMenu={event => {
+              event.preventDefault();
+              // reopen the menu to refresh its props
+              contextMenuIsOpenSetter(false);
+              setImmediate(() => {
+                contextMenuIsOpenSetter(true);
+              });
+            }}
+            onClick={() => {
+              contextMenuIsOpenSetter(false);
+            }}
+          >
+            <Provider store={store}>{entities}</Provider>
+          </Stage>
+        )}
+      </ReactReduxContext.Consumer>
 
       <ContextMenu
         open={contextMenuIsOpen}
@@ -86,10 +89,3 @@ function Main() {
     </Container>
   );
 }
-
-const mapStateToProps = (state) => ({
-  home: state.home,
-});
-const mapDispatch = { changeMessage };
-
-export default connect(mapStateToProps, mapDispatch)(Main);

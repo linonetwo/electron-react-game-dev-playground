@@ -8,7 +8,7 @@ import { install } from '@pixi/unsafe-eval';
 
 import Routes from './routes';
 import i18n from '../localization/i18n.config';
-import store, { history } from './redux/store/store';
+import { store, history } from './redux';
 import GlobalStyle from './GlobalStyles';
 
 // Apply the patch to PIXI, Adds support for environments that disallow support of new Function, such as WeChat.
