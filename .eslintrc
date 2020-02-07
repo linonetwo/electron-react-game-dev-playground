@@ -46,6 +46,7 @@
     "import/prefer-default-export": "off",
     "flowtype/define-flow-type": 1,
     "flowtype/use-flow-type": 1,
+    "react/state-in-constructor": "off",
     "react/prefer-stateless-function": "off",
     "generator-star-spacing": "off",
     "import/no-unresolved": "error",
