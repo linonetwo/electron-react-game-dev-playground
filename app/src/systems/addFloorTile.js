@@ -23,11 +23,15 @@ export default function addFloorTile({ createEntity, gameEvents }) {
         Renderer: (props: FloorProps) => <Floor {...props} />,
         x: 0,
         y: 0,
-        width: 50,
-        height: 50,
+        width: 64,
+        height: 64,
       };
 
-      const texture = new PIXI.Texture.from(resources[randomFloorName]);
+      let texture = new PIXI.Texture.from(resources[randomFloorName]);
+      texture = new PIXI.Texture(
+        texture,
+        new PIXI.Rectangle(0, 0, floorEntity.width, floorEntity.height),
+      );
       for (let indexY = 0; indexY <= 100; indexY += 1) {
         const tileRow = [];
         for (let indexX = 0; indexX <= 100; indexX += 1) {

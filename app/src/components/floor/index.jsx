@@ -49,7 +49,9 @@ export default connect(mapState)(function Floor(
       {props.inDebugMode && (
         <>
           <Text
-            text={`x: ${props.x} y: ${props.y}`}
+            text={`${props.tiles[0] &&
+              props.tiles[0][0] &&
+              props.tiles[0][0].name} x: ${props.x} y: ${props.y}`}
             style={{ fill: 'white', align: 'center' }}
             x={props.x}
             y={props.y}
