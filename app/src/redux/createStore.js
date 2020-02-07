@@ -2,13 +2,13 @@ import { init } from '@rematch/core';
 import { connectRouter, routerMiddleware } from 'connected-react-router';
 import createLoadingPlugin from '@rematch/loading';
 import immerPlugin from '@rematch/immer';
-import createBrowserHistory from 'history/createBrowserHistory';
+import createHashHistory from 'history/createHashHistory';
 
 const loadingOptions = {};
 const loading = createLoadingPlugin(loadingOptions);
 const immer = immerPlugin();
 
-export const history = createBrowserHistory();
+export const history = createHashHistory();
 
 const reducers = { router: connectRouter(history) };
 

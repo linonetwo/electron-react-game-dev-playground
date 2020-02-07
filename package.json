@@ -6,10 +6,10 @@
   "main": "app/electron/main.js",
   "scripts": {
     "dev": "concurrently \"npm run dev-server\" \"cross-env NODE_ENV=development electron .\" -k",
+    "prod": "npm run prod-build && PROD_TEST=true electron .",
     "dist": "npm run prod-build && electron-builder",
     "dev-server": "cross-env NODE_ENV=development webpack-dev-server --config ./webpack.development.js",
     "prod-build": "cross-env NODE_ENV=production npx webpack --mode=production --config ./webpack.production.js",
-    "prod": "npm run prod-build && electron .",
     "pack": "electron-builder --dir",
     "dist-mac": "npm run prod-build && electron-builder --mac",
     "dist-linux": "npm run prod-build && electron-builder --linux",

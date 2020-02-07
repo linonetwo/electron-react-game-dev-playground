@@ -5,9 +5,9 @@ const path = require('path');
 const fs = require('fs');
 const Protocol = require('./protocol');
 const MenuBuilder = require('./menu');
+const { isDev } = require('./constants');
 require('./handlers');
 
-const isDev = process.env.NODE_ENV === 'development';
 const port = 40992; // Hardcoded; needs to match webpack.development.js and package.json
 const selfHost = `http://localhost:${port}`;
 
