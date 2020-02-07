@@ -6,22 +6,16 @@ export default function pawnFacingTurningWhenMove({ entities, keysDown }) {
   entities
     .filter(e => e['@type'] === 'protagonistPawn')
     .forEach((pawn: PawnProps) => {
-      if (keysDown.includes('ArrowLeft') && pawn.x > 0) {
+      if (keysDown.includes('ArrowLeft')) {
         pawn.facing = 'west';
       }
-      if (
-        keysDown.includes('ArrowRight') &&
-        pawn.x < 512 - pawn.collider.width
-      ) {
+      if (keysDown.includes('ArrowRight')) {
         pawn.facing = 'east';
       }
-      if (keysDown.includes('ArrowUp') && pawn.y > 0) {
+      if (keysDown.includes('ArrowUp')) {
         pawn.facing = 'north';
       }
-      if (
-        keysDown.includes('ArrowDown') &&
-        pawn.y < 512 - pawn.collider.height
-      ) {
+      if (keysDown.includes('ArrowDown')) {
         pawn.facing = 'south';
       }
     });
