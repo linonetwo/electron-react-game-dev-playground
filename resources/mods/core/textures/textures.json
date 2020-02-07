@@ -1,4 +1,27 @@
 {
+  "floors": [
+    "ASPHALT",
+    "BLECH",
+    "DIAGONAL",
+    "GEMINA",
+    "GREEK",
+    "HEXAGON",
+    "LEAF",
+    "MARMOR",
+    "TRIAD",
+    "TWIST",
+    "WELLA",
+    "BAROCK",
+    "CROSS",
+    "DRAPEZ",
+    "GEMINY",
+    "HEXAGA",
+    "KACHELN",
+    "LOCH",
+    "STERN",
+    "TRIANGLE",
+    "TWISTA"
+  ],
   "hair": [
     "Bernadetta",
     "Caspar",
