@@ -32,6 +32,7 @@ export type PawnProps = {
   collider: { type: string, width: number, height: number },
   x: number,
   y: number,
+  baseMoveSpeed: number,
 };
 export type PawnPropsWithRenderer = PawnProps & { Renderer: Function };
 

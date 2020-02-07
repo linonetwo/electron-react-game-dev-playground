@@ -16,13 +16,6 @@ const Container = styled.div`
   height: 100vh;
 `;
 
-function filterHUDEntities(entities: Element<any>[]): Object[] {
-  const filter = ['mouse', 'underMouse'];
-  return entities
-    .filter(entity => filter.includes(entity.props['@type']))
-    .map(entity => entity.props);
-}
-
 const containerID = 'game-container';
 export default function Main() {
   const [entities, dispatchGameEvent] = useGame(
@@ -32,8 +25,14 @@ export default function Main() {
   const [contextMenuIsOpen, contextMenuIsOpenSetter] = useState(false);
 
   // get data for HUD and context menu
-  const dataEntities = filterHUDEntities(entities);
+  const filter = ['mouse', 'underMouse', 'camera'];
+  const dataEntities = entities
+    .filter(entity => filter.includes(entity.props['@type']))
+    .map(entity => entity.props);
   const mouseEntity = dataEntities.find(entity => entity['@type'] === 'mouse');
+  const cameraEntity = dataEntities.find(
+    entity => entity['@type'] === 'camera',
+  );
   const entitiesUnderMouseEntity = dataEntities.find(
     entity => entity['@type'] === 'underMouse',
   );
@@ -41,40 +40,48 @@ export default function Main() {
     ? entitiesUnderMouseEntity.entities
     : [];
 
+  cameraEntity && console.log({ x: cameraEntity.x, y: cameraEntity.y });
+
   return (
     <Container id={containerID}>
       <HUD dispatchGameEvent={dispatchGameEvent} />
-      <ReactReduxContext.Consumer>
-        {({ store }) => (
-          <Stage
-            onMouseMove={event => {
-              dispatchGameEvent({
-                type: 'mouse-move',
-                x: event.clientX,
-                y: event.clientY,
-              });
-            }}
-            options={{
-              backgroundColor: 0x10bb99,
-              height: window.innerHeight,
-              width: window.innerWidth,
-            }}
-            onContextMenu={event => {
-              event.preventDefault();
-              // reopen the menu to refresh its props
-              contextMenuIsOpenSetter(false);
-              setImmediate(() => {
-                contextMenuIsOpenSetter(true);
-              });
-            }}
-            onClick={() => {
-              contextMenuIsOpenSetter(false);
-            }}
-          >
-            <Provider store={store}>{entities}</Provider>
-          </Stage>
-        )}
-      </ReactReduxContext.Consumer>
+      {cameraEntity && (
+        <ReactReduxContext.Consumer>
+          {({ store }) => (
+            <Stage
+              // follow the camera
+              pivot={{ x: cameraEntity.x, y: cameraEntity.y }}
+              // center the camera
+              position={{ x: window.innerWidth / 2, y: window.innerHeight / 2 }}
+              options={{
+                backgroundColor: 0x10bb99,
+                height: window.innerHeight,
+                width: window.innerWidth,
+              }}
+              onMouseMove={event => {
+                dispatchGameEvent({
+                  type: 'mouse-move',
+                  x: event.clientX,
+                  y: event.clientY,
+                });
+              }}
+              onContextMenu={event => {
+                event.preventDefault();
+                // reopen the menu to refresh its props
+                contextMenuIsOpenSetter(false);
+                setImmediate(() => {
+                  contextMenuIsOpenSetter(true);
+                });
+              }}
+              onClick={() => {
+                contextMenuIsOpenSetter(false);
+              }}
+            >
+              <Provider store={store}>{entities}</Provider>
+            </Stage>
+          )}
+        </ReactReduxContext.Consumer>
+      )}
 
       <ContextMenu
         open={contextMenuIsOpen}

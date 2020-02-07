@@ -45,9 +45,15 @@ export default connect(
         </Popover>
         <NavbarDivider />
         <Button
-          onClick={() => props.dispatchGameEvent({ type: 'spawn-pawn' })}
+          onClick={() => props.dispatchGameEvent({ type: 'spawn-protagonist-pawn' })}
           className={Classes.MINIMAL}
           icon="user"
+          text="Spawn Protagonist"
+        />
+        <Button
+          onClick={() => props.dispatchGameEvent({ type: 'spawn-pawn' })}
+          className={Classes.MINIMAL}
+          icon="people"
           text="Spawn Pawn"
         />
         <Button
