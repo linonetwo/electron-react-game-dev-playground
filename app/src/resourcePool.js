@@ -37,5 +37,12 @@ window.mod.getTextureIndex().then(allTextureIndex => {
         resources[resourceDetailName] = resourceBuffer;
       }
     });
+    allTextureIndex[modName].floors.forEach(async resourceName => {
+      const resourceBuffer = await window.mod.getTexture({
+        modName,
+        texturePath: `floors/${resourceName}.png`,
+      });
+      resources[resourceName] = resourceBuffer;
+    });
   }
 });

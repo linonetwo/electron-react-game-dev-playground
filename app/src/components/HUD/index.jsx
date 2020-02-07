@@ -50,6 +50,12 @@ export default connect(
           icon="user"
           text="Spawn Pawn"
         />
+        <Button
+          onClick={() => props.dispatchGameEvent({ type: 'add-floor' })}
+          className={Classes.MINIMAL}
+          icon="insert"
+          text="Add Floor"
+        />
         <DebugSwitch
           checked={props.inDebugMode}
           label="Debug"

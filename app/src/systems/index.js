@@ -4,6 +4,7 @@ import pawnFacingTurningWhenMove from './pawnFacingTurningWhenMove';
 import spawnPawn from './spawnPawn';
 import listEntityUnderMouse from './listEntityUnderMouse';
 import mouseMove from './mouseMove';
+import addFloorTile from './addFloorTile';
 
 export const initialSystems = [
   movement,
@@ -12,4 +13,5 @@ export const initialSystems = [
   pawnFacingTurningWhenMove,
   listEntityUnderMouse,
   mouseMove,
+  addFloorTile,
 ];
