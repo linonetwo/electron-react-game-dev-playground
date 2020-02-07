@@ -40,8 +40,6 @@ export default function Main() {
     ? entitiesUnderMouseEntity.entities
     : [];
 
-  cameraEntity && console.log({ x: cameraEntity.x, y: cameraEntity.y });
-
   return (
     <Container id={containerID}>
       <HUD dispatchGameEvent={dispatchGameEvent} />
