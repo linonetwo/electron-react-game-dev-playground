@@ -6,6 +6,7 @@ import ReactDOM from 'react-dom';
 import { search } from 'fast-fuzzy';
 
 export type MenuItem = {
+  title: string,
   type: string,
   icon?: string,
 };
@@ -54,9 +55,21 @@ export type HoverMenuProps = {
   items: MenuItem[],
   position: { x: ?number, y: ?number },
 };
-export default class HoverMenu extends Component<HoverMenuProps, *> {
+type HoverMenuState = {
+  filter: string,
+  items: MenuItem[],
+  position: {
+    x: number,
+    y: number,
+  },
+};
+export default class HoverMenu extends Component<
+  HoverMenuProps,
+  HoverMenuState,
+> {
   state = {
     filter: '',
+    items: [],
     position: { x: 0, y: 0 },
   };
 
@@ -65,7 +78,7 @@ export default class HoverMenu extends Component<HoverMenuProps, *> {
     if (nextProps.open) {
       return null;
     }
-    return { position: nextProps.position };
+    return { position: nextProps.position, items: nextProps.items };
   }
 
   componentDidMount() {
@@ -92,9 +105,10 @@ export default class HoverMenu extends Component<HoverMenuProps, *> {
   renderMarkButton = (item: MenuItem) => {
     return (
       <MenuButton
-        key={item.type}
+        key={`${item.title}${item.type ? ` ${item.type}` : ''}`}
         onMouseDown={event => this.onClickMark(item, event)}
       >
+        {item.title && <span className="title">{item.title}</span>}
         {item.type && <span className="type">{item.type}</span>}
         {item.icon && <span className="icon">{item.icon}</span>}
       </MenuButton>
@@ -113,7 +127,7 @@ export default class HoverMenu extends Component<HoverMenuProps, *> {
 
   handleSearch = (event: KeyboardEvent) => {
     const { opacity } = this.getMenuStyle();
-    if (opacity && this.props.items.length > 0) {
+    if (opacity && this.state.items.length > 0) {
       event.preventDefault();
       event.stopPropagation();
       if (event.key === 'Escape') {
@@ -136,13 +150,13 @@ export default class HoverMenu extends Component<HoverMenuProps, *> {
     if (!this.props.open) return null;
     const { opacity, top, left } = this.getMenuStyle();
     const mountPoint = document.getElementById(this.props.mountPoint);
-    if (mountPoint && this.props.items.length > 0) {
+    if (mountPoint && this.state.items.length > 0) {
       const itemsToDisplay =
         this.state.filter.length > 0
-          ? search(this.state.filter, this.props.items, {
+          ? search(this.state.filter, this.state.items, {
               keySelector: (item: MenuItem) => item.type,
             })
-          : this.props.items;
+          : this.state.items;
       return ReactDOM.createPortal(
         <MenuContainer
           data-usage="hover-menu"

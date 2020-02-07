@@ -17,6 +17,9 @@ export default function listEntityUnderMouse({ entities }) {
         mouseEntity.y > entity.y - entity.collider.height / 2 &&
         mouseEntity.y < entity.y + entity.collider.height / 2,
     );
-    underMouseEntity.entities = entityUnderMouse.map(entity => entity['@type']);
+    underMouseEntity.entities = entityUnderMouse.map(entity => ({
+      '@type': entity['@type'],
+      name: entity.name,
+    }));
   }
 }

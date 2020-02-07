@@ -1,11 +1,12 @@
 // @flow
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
+import type { Element } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { Stage } from 'react-pixi-fiber';
 import { changeMessage } from '../../redux/components/home/homeSlice';
 
-import HUD, { filterHUDEntities } from '../../components/HUD';
+import HUD from '../../components/HUD';
 import ContextMenu from '../../components/ContextMenu';
 import { initialSystems } from '../../systems';
 import { initialEntities } from '../../entites';
@@ -16,6 +17,13 @@ const Container = styled.div`
   height: 100vh;
 `;
 
+function filterHUDEntities(entities: Element<any>[]): Object[] {
+  const filter = ['mouse', 'underMouse'];
+  return entities
+    .filter(entity => filter.includes(entity.props['@type']))
+    .map(entity => entity.props);
+}
+
 const containerID = 'game-container';
 function Main(props) {
   const [entities, dispatchGameEvent] = useGame(
@@ -23,24 +31,26 @@ function Main(props) {
     initialEntities,
   );
   const [contextMenuIsOpen, contextMenuIsOpenSetter] = useState(false);
-  const mousePosition = useRef({ x: 0, y: 0 });
+
+  // get data for HUD and context menu
+  const dataEntities = filterHUDEntities(entities);
+  const mouseEntity = dataEntities.find(entity => entity['@type'] === 'mouse');
+  const entitiesUnderMouseEntity = dataEntities.find(
+    entity => entity['@type'] === 'underMouse',
+  );
+  const entitiesUnderMouse = entitiesUnderMouseEntity
+    ? entitiesUnderMouseEntity.entities
+    : [];
 
   return (
     <Container id={containerID}>
-      <HUD
-        dispatchGameEvent={dispatchGameEvent}
-        entities={filterHUDEntities(entities)}
-      />
+      <HUD dispatchGameEvent={dispatchGameEvent} />
       <Stage
         onMouseMove={event => {
-          const position = { x: event.clientX, y: event.clientY };
-          // set
-          if (!contextMenuIsOpen) {
-            mousePosition.current = position;
-          }
           dispatchGameEvent({
             type: 'mouse-move',
-            ...position,
+            x: event.clientX,
+            y: event.clientY,
           });
         }}
         options={{
@@ -50,7 +60,11 @@ function Main(props) {
         }}
         onContextMenu={event => {
           event.preventDefault();
-          contextMenuIsOpenSetter(true);
+          // reopen the menu to refresh its props
+          contextMenuIsOpenSetter(false);
+          setImmediate(() => {
+            contextMenuIsOpenSetter(true);
+          });
         }}
         onClick={() => {
           contextMenuIsOpenSetter(false);
@@ -61,8 +75,11 @@ function Main(props) {
 
       <ContextMenu
         open={contextMenuIsOpen}
-        items={[{ type: 'aaa' }]}
-        position={mousePosition.current}
+        items={entitiesUnderMouse.map(entity => ({
+          title: entity.name,
+          type: entity['@type'],
+        }))}
+        position={mouseEntity || { x: 0, y: 0 }}
         mountPoint={containerID}
       />
     </Container>

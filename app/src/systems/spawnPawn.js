@@ -17,6 +17,7 @@ export default function spawnPawn({ createEntity, gameEvents }) {
       const randomBodyName = randomItem(resources.index.core.bodies);
       const pawnEntity: PawnPropsWithRenderer = {
         '@type': 'protagonistPawn',
+        name: `ID${String(Math.random()).substring(2, 6)}`,
         Renderer: (props: PawnProps) => <Pawn {...props} />,
         x: 200,
         y: 200,

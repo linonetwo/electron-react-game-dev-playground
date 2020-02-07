@@ -9,6 +9,7 @@ export type PawnTextureFacing = 'north' | 'south' | 'east' | 'west';
 export type PawnFacing = PawnTextureFacing | 'west';
 export type PawnProps = {
   '@type': string,
+  name: string,
   facing: PawnFacing,
   texture: {|
     body: {|
