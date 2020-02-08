@@ -26,7 +26,6 @@ class ResourcePool {
       } else {
         this.textures[name] = this.textures[copyFrom];
       }
-      return this.textures[name];
     }
     // if no "copyFrom" set
     if (!this.textures[name]) return null;
