@@ -20,7 +20,8 @@
     "LOCH",
     "STERN",
     "TRIANGLE",
-    "TWISTA"
+    "TWISTA",
+    "TitaniumTile"
   ],
   "flowers": {
     "AlliumGiganteum": ["AlliumGiganteumA", "AlliumGiganteumB"],
@@ -59,6 +60,12 @@
     "Shield_MenuIcon",
     "Titanium_MenuIcon",
     "Window_MenuIcon"
+  ],
+  "door": [
+    "DoorTitanium_MenuIcon",
+    "DoorTitanium_Mover",
+    "DoorTitaniumBD_MenuIcon",
+    "DoorTitaniumBD_Mover"
   ],
   "hair": [
     "Bernadetta",
