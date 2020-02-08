@@ -5,11 +5,11 @@ import styled from 'styled-components';
 import { Stage } from 'react-pixi-fiber';
 import { ReactReduxContext, Provider } from 'react-redux';
 
-import HUD from '../../components/HUD';
-import ContextMenu from '../../components/ContextMenu';
-import { initialSystems } from '../../systems';
-import { initialEntities } from '../../entites';
-import useGame from '../../useGame';
+import HUD from 'components/HUD';
+import ContextMenu from 'components/ContextMenu';
+import { initialSystems } from '~/systems';
+import { initialEntities } from '~/entites';
+import useGame from '~/useGame';
 
 const Container = styled.div`
   width: 100vw;

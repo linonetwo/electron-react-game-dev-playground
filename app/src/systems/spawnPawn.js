@@ -1,9 +1,9 @@
 // @flow
 import React from 'react';
 import * as PIXI from 'pixi.js';
-import Pawn from '../components/pawn';
-import type { PawnProps, PawnPropsWithRenderer } from '../components/pawn';
-import { resources } from '../resourcePool';
+import Pawn from 'components/pawn';
+import type { PawnProps, PawnPropsWithRenderer } from 'components/pawn';
+import { resources } from '~/resourcePool';
 
 function randomItem(items) {
   return items[Math.floor(Math.random() * items.length)];

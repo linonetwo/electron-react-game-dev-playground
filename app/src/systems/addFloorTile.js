@@ -1,13 +1,13 @@
 // @flow
 import React from 'react';
 import * as PIXI from 'pixi.js';
-import Floor from '../components/floor';
+import Floor from 'components/floor';
 import type {
   FloorProps,
   IFloorTile,
   FloorPropsWithRenderer,
-} from '../components/floor';
-import { resources } from '../resourcePool';
+} from 'components/floor';
+import { resources } from '~/resourcePool';
 
 function randomItem(items) {
   return items[Math.floor(Math.random() * items.length)];

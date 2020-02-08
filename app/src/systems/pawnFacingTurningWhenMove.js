@@ -1,6 +1,6 @@
 // @flow
 /* eslint-disable no-param-reassign */
-import type { PawnProps } from '../components/pawn';
+import type { PawnProps } from 'components/pawn';
 
 export default function pawnFacingTurningWhenMove({ entities, keysDown }) {
   entities

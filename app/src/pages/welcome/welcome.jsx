@@ -1,5 +1,5 @@
 import React from 'react';
-import ROUTES from 'Constants/routes';
+import ROUTES from 'constants/routes.json';
 import { Link } from 'react-router-dom';
 import './welcome.css';
 
