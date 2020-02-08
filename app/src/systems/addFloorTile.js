@@ -13,7 +13,10 @@ function randomItem(items) {
   return items[Math.floor(Math.random() * items.length)];
 }
 
-export default function addFloorTile({ createEntity, gameEvents }: SystemInput) {
+export default function addFloorTile({
+  createEntity,
+  gameEvents,
+}: SystemInput) {
   gameEvents.forEach(event => {
     if (event.type === 'add-floor') {
       if (!resources.index.core) return;
@@ -28,16 +31,14 @@ export default function addFloorTile({ createEntity, gameEvents }: SystemInput) 
         height: 64,
       };
 
-      for (let indexY = 0; indexY <= 100; indexY += 1) {
-        const tileRow = [];
-        for (let indexX = 0; indexX <= 100; indexX += 1) {
-          const tile: IFloorTile = {
-            texture: randomFloorName,
-            name: `${randomFloorName} ${String(Math.random()).substring(2, 6)}`,
-          };
-          tileRow.push(tile);
-        }
-        floorEntity.tiles.push(tileRow);
+      for (let index = 0; index <= 100; index += 1) {
+        const tile: IFloorTile = {
+          texture: randomFloorName,
+          name: `${randomFloorName} ${String(Math.random()).substring(2, 6)}`,
+          x: Math.floor(Math.random() * index * 100),
+          y: Math.floor(Math.random() * index * 100),
+        };
+        floorEntity.tiles.push(tile);
       }
       createEntity(floorEntity);
     }

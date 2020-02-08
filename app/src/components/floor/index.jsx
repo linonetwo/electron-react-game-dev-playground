@@ -11,13 +11,12 @@ const centerAnchor = new PIXI.Point(0.5, 0.5);
 export type IFloorTile = {
   name: string,
   texture: string,
+  x: number,
+  y: number,
 };
 export type FloorProps = {
   '@type': string,
-  tiles: IFloorTile[][],
-  // top left's xy for this map
-  x: number,
-  y: number,
+  tiles: IFloorTile[],
   // width and height of each tile
   width: number,
   height: number,
@@ -42,30 +41,26 @@ export default connect(mapState)(function Floor(
   );
   return (
     <Container>
-      {props.tiles.map((tileRow, indexY) =>
-        tileRow.map((tile, indexX) => (
+      {props.tiles.map(tile => (
+        <>
           <Sprite
             texture={resources.getTexture(tile.texture, trimTileTexture)}
-            x={props.width * indexX}
-            y={props.height * indexY}
+            x={tile.x}
+            y={tile.y}
             width={props.width}
             height={props.height}
             anchor={centerAnchor}
           />
-        )),
-      )}
-      {props.inDebugMode && (
-        <>
-          <Text
-            text={`${props.tiles[0] &&
-              props.tiles[0][0] &&
-              props.tiles[0][0].name} x: ${props.x} y: ${props.y}`}
-            style={{ fill: 'white', align: 'center' }}
-            x={props.x}
-            y={props.y}
-          />
+          {props.inDebugMode && (
+            <Text
+              text={`${tile.name} x: ${tile.x} y: ${tile.y}`}
+              style={{ fill: 'white', align: 'center' }}
+              x={tile.x}
+              y={tile.y}
+            />
+          )}
         </>
-      )}
+      ))}
     </Container>
   );
 });
