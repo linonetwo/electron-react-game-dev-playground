@@ -1,7 +1,6 @@
 // @flow
 import React, { useState, useCallback } from 'react';
 import {
-  AnchorButton,
   Button,
   Classes,
   Dialog,
@@ -9,7 +8,9 @@ import {
   FormGroup,
   InputGroup,
   Tooltip,
+  MenuItem,
 } from '@blueprintjs/core';
+import { Suggest } from '@blueprintjs/select';
 import { connect } from 'react-redux';
 
 const mapState = ({
@@ -32,9 +33,20 @@ export default connect(
   dispatchGameEvent: (event: any) => void,
 }) {
   const toggleSaveDialog = useCallback(() => props.toggleDialog('save'));
+  const toggleLoadDialog = useCallback(() => props.toggleDialog('load'));
+  // for save dialog
   const [saveName, saveNameSetter] = useState('');
+  // for load dialog
+  const [loadableSaveName, loadableSaveNameSetter] = useState([]);
+  const [saveNameToLoad, saveNameToLoadSetter] = useState('');
+  const loadAllLoadableSaveName = useCallback(async (mapName: string) => {
+    const metadata = await window.save.loadMapMetadata(mapName);
+    console.warn(`metadata`, JSON.stringify(metadata, null, '  '));
+  });
   return (
     <>
+      {/* Save */}
+
       <Dialog
         icon="cloud-upload"
         onClose={toggleSaveDialog}
@@ -72,6 +84,61 @@ export default connect(
               }}
             >
               Save
+            </Button>
+          </div>
+        </div>
+      </Dialog>
+
+      {/* Load */}
+
+      <Dialog
+        icon="cloud-download"
+        onClose={toggleLoadDialog}
+        title="Load..."
+        isOpen={props.loadDialogOpen}
+        onOpened={() => {
+          loadableSaveNameSetter(['aaa']);
+        }}
+      >
+        <div className={Classes.DIALOG_BODY}>
+          <Suggest
+            items={loadableSaveName}
+            inputValueRenderer={i => i}
+            noResults={<MenuItem disabled text="No results." />}
+            onItemSelect={name => {
+              saveNameToLoadSetter(name);
+              loadAllLoadableSaveName(name);
+            }}
+            itemRenderer={(item, { handleClick }) => {
+              return (
+                <MenuItem
+                  label={`${item} label`}
+                  key={item}
+                  onClick={handleClick}
+                  text={item}
+                />
+              );
+            }}
+          />
+        </div>
+
+        <div className={Classes.DIALOG_FOOTER}>
+          <div className={Classes.DIALOG_FOOTER_ACTIONS}>
+            <Tooltip content="Don't want to load? Click me!">
+              <Button onClick={toggleLoadDialog}>Close</Button>
+            </Tooltip>
+            <Button
+              intent={Intent.PRIMARY}
+              onClick={() => {
+                // props.dispatchGameEvent({
+                //   type: 'load-map',
+                //   payload: { name: saveNameToLoad },
+                // });
+                // toggleLoadDialog();
+                console.log('saveNameToLoad', saveNameToLoad);
+              }}
+            >
+              Load
             </Button>
           </div>
         </div>
