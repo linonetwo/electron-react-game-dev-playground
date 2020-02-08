@@ -96,3 +96,5 @@ dist/
 
 # VSCode specific
 .vscode/
+
+resources/saves

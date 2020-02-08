@@ -5,6 +5,8 @@ const sub = require('date-fns/sub');
 const add = require('date-fns/add');
 const getTime = require('date-fns/getTime');
 
+const { ensureSaveDir } = require('./getSaveDir');
+
 async function saveMapMetadata(
   { name, openTime, previousPlayTime, saveTime },
   chunksMetadata,
@@ -26,8 +28,10 @@ async function saveMapMetadata(
   // create buffer to store to fs
   const mapMetadataMessage = MapMetadata.create(mapMetadata);
   const buffer = MapMetadata.encode(mapMetadataMessage).finish();
-  // TODO: group file in folder with name, and support multiple auto save named in time
-  fs.writeFile(path.join(__dirname, `${name}.protocolbuffer`), buffer);
+
+  // create save folder and save the file
+  const saveDirPath = await ensureSaveDir(name);
+  fs.writeFile(path.join(saveDirPath, `${name}.protocolbuffer`), buffer);
 }
 
 async function saveMapChunk(mapName, entities) {
@@ -53,8 +57,11 @@ async function saveMapChunk(mapName, entities) {
 
   const mapChunkMessage = MapChunk.create(mapChunk);
   const buffer = MapChunk.encode(mapChunkMessage).finish();
+
+  // create save folder and save the file
+  const saveDirName = await ensureSaveDir(mapName);
   fs.writeFile(
-    path.join(__dirname, `${mapName}.${chunkID}.protocolbuffer`),
+    path.join(saveDirName, `${mapName}.${chunkID}.protocolbuffer`),
     buffer,
   );
 }

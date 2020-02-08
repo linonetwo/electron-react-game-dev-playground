@@ -28,7 +28,8 @@
         "from": "resources",
         "to": "",
         "filter": [
-          "**/*"
+          "**/*",
+          "!saves"
         ]
       }
     ],

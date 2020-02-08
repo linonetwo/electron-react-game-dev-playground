@@ -5,6 +5,8 @@ const path = require('path');
 const fs = require('fs').promises;
 
 const { saveMapMetadata, saveMapChunk } = require('./saveProtobuf');
+const { readAvailableSaves } = require('./readAvailableSaves');
+const { getSaveDirPath } = require('./getSaveDir');
 
 ipcMain.on('save-map', async (event, mapData) => {
   const { name, openTime, previousPlayTime, entities } = mapData;
@@ -27,19 +29,26 @@ ipcMain.on('save-map', async (event, mapData) => {
 });
 
 // load chunk metadata so we can know which chunk to load first
-ipcMain.handle('load-map-metadata', async (event, mapName) => {
+ipcMain.handle('load-all-map-metadata', async () => {
   // TODO: add screenshot to save metadata
   const protocolRoot = await protobuf.load(
     path.join(__dirname, 'MapMetadata.proto'),
   );
   const MapMetadata = protocolRoot.lookupType('MapMetadata');
-  const buffer = await fs.readFile(
-    path.join(__dirname, `${mapName}.protocolbuffer`),
+
+  const availableSaves = await readAvailableSaves();
+  const buffers = await Promise.all(
+    availableSaves.map(saveName => {
+      return fs.readFile(
+        path.join(getSaveDirPath(saveName), `${saveName}.protocolbuffer`),
+      );
+    }),
   );
 
-  const message = MapMetadata.decode(buffer);
-  const mapMetadata = MapMetadata.toObject(message);
-  return mapMetadata;
+  const mapMetadataList = buffers
+    .map(buffer => MapMetadata.decode(buffer))
+    .map(mapMetadataMessage => MapMetadata.toObject(mapMetadataMessage));
+  return mapMetadataList;
 });
 
 // load map detail chunk

@@ -2,7 +2,7 @@ const { contextBridge, ipcRenderer } = require('electron');
 
 contextBridge.exposeInMainWorld('save', {
   saveMap: mapData => ipcRenderer.send('save-map', mapData),
-  loadMapMetadata: mapName => ipcRenderer.invoke('load-map-metadata', mapName),
+  loadMapMetadataList: () => ipcRenderer.invoke('load-all-map-metadata'),
   loadMapChunk: ({ mapName, chunkID }) =>
     ipcRenderer.invoke('load-map-chunk', { mapName, chunkID }),
 });

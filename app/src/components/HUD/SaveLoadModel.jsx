@@ -12,6 +12,9 @@ import {
 } from '@blueprintjs/core';
 import { Suggest } from '@blueprintjs/select';
 import { connect } from 'react-redux';
+import formatDistance from 'date-fns/formatDistance';
+
+import type { ISaveMetadata } from '~/typings';
 
 const mapState = ({
   dialog: { save: saveDialogOpen, load: loadDialogOpen },
@@ -37,10 +40,11 @@ export default connect(
   // for save dialog
   const [saveName, saveNameSetter] = useState('');
   // for load dialog
-  const [loadableSaveName, loadableSaveNameSetter] = useState([]);
+  const [loadableSave, loadableSaveSetter] = useState<ISaveMetadata[]>([]);
   const [saveNameToLoad, saveNameToLoadSetter] = useState('');
-  const loadAllLoadableSaveName = useCallback(async (mapName: string) => {
-    const metadata = await window.save.loadMapMetadata(mapName);
+  const loadAllLoadableSave = useCallback(async () => {
+    const metadata: ISaveMetadata[] = await window.save.loadMapMetadataList();
+    loadableSaveSetter(metadata);
     console.warn(`metadata`, JSON.stringify(metadata, null, '  '));
   });
   return (
@@ -97,25 +101,27 @@ export default connect(
         title="Load..."
         isOpen={props.loadDialogOpen}
         onOpened={() => {
-          loadableSaveNameSetter(['aaa']);
+          loadAllLoadableSave();
         }}
       >
         <div className={Classes.DIALOG_BODY}>
           <Suggest
-            items={loadableSaveName}
-            inputValueRenderer={i => i}
+            items={loadableSave}
+            inputValueRenderer={(item: ISaveMetadata) => item.name}
             noResults={<MenuItem disabled text="No results." />}
-            onItemSelect={name => {
-              saveNameToLoadSetter(name);
-              loadAllLoadableSaveName(name);
+            onItemSelect={(item: ISaveMetadata) => {
+              saveNameToLoadSetter(item.name);
             }}
-            itemRenderer={(item, { handleClick }) => {
+            itemRenderer={(item: ISaveMetadata, { handleClick }) => {
               return (
                 <MenuItem
-                  label={`${item} label`}
-                  key={item}
+                  label={`Last played: ${formatDistance(
+                    new Date(item.saveTime),
+                    new Date(),
+                  )} ago (${formatDistance(item.playTime, 0)})`}
+                  key={item.name}
                   onClick={handleClick}
-                  text={item}
+                  text={item.name}
                 />
               );
             }}
@@ -130,12 +136,11 @@ export default connect(
             <Button
               intent={Intent.PRIMARY}
               onClick={() => {
-                // props.dispatchGameEvent({
-                //   type: 'load-map',
-                //   payload: { name: saveNameToLoad },
-                // });
-                // toggleLoadDialog();
-                console.log('saveNameToLoad', saveNameToLoad);
+                props.dispatchGameEvent({
+                  type: 'load-map',
+                  payload: { name: saveNameToLoad },
+                });
+                toggleLoadDialog();
               }}
             >
               Load
