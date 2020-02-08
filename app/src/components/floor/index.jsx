@@ -1,5 +1,5 @@
 // @flow
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Sprite, Container, Text } from 'react-pixi-fiber';
 import * as PIXI from 'pixi.js';
 import { connect } from 'react-redux';
@@ -31,12 +31,15 @@ type PropFromRedux = { inDebugMode: boolean };
 export default connect(mapState)(function Floor(
   props: FloorProps & PropFromRedux,
 ) {
-  function trimTileTexture(texture) {
-    return new PIXI.Texture(
-      texture,
-      new PIXI.Rectangle(0, 0, props.width, props.height),
-    );
-  }
+  const trimTileTexture = useCallback(
+    texture => {
+      return new PIXI.Texture(
+        texture,
+        new PIXI.Rectangle(0, 0, props.width, props.height),
+      );
+    },
+    [props.width, props.height],
+  );
   return (
     <Container>
       {props.tiles.map((tileRow, indexY) =>
