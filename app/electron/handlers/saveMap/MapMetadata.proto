@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+message MapMetadata {
+  string name = 1;
+  string saveTime = 2;
+  string playTime = 3;
+  
+  message MapChunkMetadata {
+    // center of the map
+    int32 anchorX = 1;
+    int32 anchorY = 2;
+    // width height
+    int32 width = 3;
+    int32 height = 4;
+    // name of chunk file
+    int32 id = 5;
+  }
+  repeated MapChunkMetadata chunks = 4;
+}

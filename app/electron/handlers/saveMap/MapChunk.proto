@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+message MapChunk {
+  int32 id = 1;
+  
+  message Entity {
+    string type = 0;
+    // entity position
+    int32 x = 1;
+    int32 y = 2;
+    // JSON.stringify result of {...rest }
+    string rest = 3;
+  }
+  repeated Entity entities = 2;
+}
