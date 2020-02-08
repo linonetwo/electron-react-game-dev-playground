@@ -9,7 +9,7 @@
     "prettier/react",
     "prettier/standard"
   ],
-  "plugins": ["flowtype", "prettier", "jest"],
+  "plugins": ["flowtype", "prettier", "jest", "import"],
   "parserOptions": {
     "sourceType": "module",
     "ecmaFeatures": {
@@ -22,10 +22,12 @@
     "node": true,
     "jest/globals": true
   },
-  "rules": {
+  "settings": {
     "import/resolver": {
       "babel-module": {}
-    },
+    }
+  },
+  "rules": {
     "comma-dangle": [
       "error",
       {
