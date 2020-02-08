@@ -52,7 +52,7 @@ async function createWindow() {
       contextIsolation: true,
       enableRemoteModule: false,
       additionalArguments: [`storePath:${app.getPath('userData')}`],
-      preload: path.join(__dirname, 'preload.js'),
+      preload: path.join(__dirname, 'preload', 'index.js'),
     },
   });
 
