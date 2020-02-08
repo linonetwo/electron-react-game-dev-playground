@@ -38,6 +38,11 @@ export type PawnProps = {
   y: number,
   baseMoveSpeed: number,
 };
+
+function flipTexture(texture: PIXI.Texture) {
+  return new PIXI.Texture(texture, texture.frame, null, null, 12);
+}
+
 export type PawnPropsWithRenderer = PawnProps & { Renderer: Function };
 
 const mapState = ({ debug: { inDebugMode } }) => ({
@@ -54,29 +59,56 @@ export default connect(mapState)(function Pawn(
     (facing: PawnTextureFacing);
     flipLeftRight = true;
   }
-  const headHeight = 50;
+  const headHeight = 40;
   return (
     <Container>
       <Sprite
+        width={props.collider.width}
+        height={props.collider.height}
         anchor={centerAnchor}
         x={props.x}
         y={props.y}
-        scale={{ x: flipLeftRight ? -1 : 1, y: 1 }}
-        texture={resources.getTexture(props.texture.body[facing])}
+        texture={
+          flipLeftRight
+            ? resources.getTexture(
+                `${props.texture.body[facing]}_flip`,
+                flipTexture,
+                props.texture.body[facing],
+              )
+            : resources.getTexture(props.texture.body[facing])
+        }
       />
       <Sprite
+        width={props.collider.width}
+        height={props.collider.height}
         anchor={centerAnchor}
         x={props.x}
         y={props.y - headHeight}
-        scale={{ x: flipLeftRight ? -1 : 1, y: 1 }}
-        texture={resources.getTexture(props.texture.head[facing])}
+        texture={
+          flipLeftRight
+            ? resources.getTexture(
+                `${props.texture.head[facing]}_flip`,
+                flipTexture,
+                props.texture.head[facing],
+              )
+            : resources.getTexture(props.texture.head[facing])
+        }
       />
       <Sprite
+        width={props.collider.width}
+        height={props.collider.height}
         anchor={centerAnchor}
         x={props.x}
         y={props.y - headHeight}
-        scale={{ x: flipLeftRight ? -1 : 1, y: 1 }}
-        texture={resources.getTexture(props.texture.hair[facing])}
+        texture={
+          flipLeftRight
+            ? resources.getTexture(
+                `${props.texture.hair[facing]}_flip`,
+                flipTexture,
+                props.texture.hair[facing],
+              )
+            : resources.getTexture(props.texture.hair[facing])
+        }
       />
       {props.inDebugMode && (
         <>

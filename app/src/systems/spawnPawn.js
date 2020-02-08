@@ -22,7 +22,7 @@ export default function spawnPawn({ createEntity, gameEvents }) {
         x: 200,
         y: 200,
         baseMoveSpeed: 10,
-        collider: { type: 'block', width: 150, height: 200 },
+        collider: { type: 'block', width: 160, height: 160 },
         facing: 'south',
         texture: {
           head: {

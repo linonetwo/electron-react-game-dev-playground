@@ -3,12 +3,32 @@
 import * as PIXI from 'pixi.js';
 
 class ResourcePool {
-  index = {}
+  index = {};
   textures = {};
   addTextureRaw(name: string, rawTexture: string) {
     this.textures[name] = rawTexture;
   }
-  getTexture(name: string, modifyTexture: ?Function) {
+  /**
+   *
+   * @param {*} name Name of resource
+   * @param {*} modifyTexture Function to do something with texture, return a new texture
+   * @param {*} copyFrom Name of resource, You can copy a texture and create a flipped version
+   */
+  getTexture(
+    name: string,
+    modifyTexture: Function = i => i,
+    copyFrom: ?string,
+  ) {
+    // generate a new texture from another texture
+    if (copyFrom && !this.textures[name] && this.textures[copyFrom]) {
+      if (this.textures[copyFrom] instanceof PIXI.Texture) {
+        this.textures[name] = modifyTexture(this.textures[copyFrom]);
+      } else {
+        this.textures[name] = this.textures[copyFrom];
+      }
+      return this.textures[name];
+    }
+    // if no "copyFrom" set
     if (!this.textures[name]) return null;
     if (!(this.textures[name] instanceof PIXI.Texture)) {
       // generate texture on first load
