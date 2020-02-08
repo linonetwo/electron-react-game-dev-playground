@@ -40,33 +40,21 @@ export default connect(
   return (
     <Navbar>
       <NavbarGroup align={Alignment.LEFT}>
-        <Popover content={getDebugMenu()} position={Position.BOTTOM} minimal>
+        <Popover
+          content={getDebugMenu(props.dispatchGameEvent)}
+          position={Position.BOTTOM}
+          minimal
+        >
           <Button className={Classes.MINIMAL} icon="menu" />
         </Popover>
         <NavbarDivider />
         <Button
-          onClick={() => props.dispatchGameEvent({ type: 'spawn-protagonist-pawn' })}
+          onClick={() =>
+            props.dispatchGameEvent({ type: 'spawn-protagonist-pawn' })
+          }
           className={Classes.MINIMAL}
           icon="user"
           text="Spawn Protagonist"
-        />
-        <Button
-          onClick={() => props.dispatchGameEvent({ type: 'spawn-pawn' })}
-          className={Classes.MINIMAL}
-          icon="people"
-          text="Spawn Pawn"
-        />
-        <Button
-          onClick={() => props.dispatchGameEvent({ type: 'add-floor' })}
-          className={Classes.MINIMAL}
-          icon="insert"
-          text="Add Floor"
-        />
-        <Button
-          onClick={() => props.dispatchGameEvent({ type: 'add-tree' })}
-          className={Classes.MINIMAL}
-          icon="tree"
-          text="Add Tree"
         />
         <DebugSwitch
           checked={props.inDebugMode}

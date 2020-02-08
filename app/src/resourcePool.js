@@ -107,5 +107,12 @@ window.mod.getTextureIndex().then(allTextureIndex => {
       });
       resources.addTextureRaw(resourceName, resourceBuffer);
     });
+    allTextureIndex[modName].wall.forEach(async resourceName => {
+      const resourceBuffer = await window.mod.getTexture({
+        modName,
+        texturePath: `wall/${resourceName}.png`,
+      });
+      resources.addTextureRaw(resourceName, resourceBuffer);
+    });
   }
 });

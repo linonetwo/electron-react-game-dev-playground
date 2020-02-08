@@ -6,6 +6,7 @@ import listEntityUnderMouse from './listEntityUnderMouse';
 import mouseMove from './mouseMove';
 import addFloorTile from './addFloorTile';
 import addTree from './addTree';
+import addWall from './addWall';
 import camera from './camera';
 
 export const initialSystems = [
@@ -17,5 +18,6 @@ export const initialSystems = [
   mouseMove,
   addFloorTile,
   addTree,
+  addWall,
   camera,
 ];
