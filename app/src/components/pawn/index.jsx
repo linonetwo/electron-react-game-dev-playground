@@ -4,6 +4,8 @@ import { Sprite, Container, CustomPIXIComponent, Text } from 'react-pixi-fiber';
 import * as PIXI from 'pixi.js';
 import { connect } from 'react-redux';
 
+import { resources } from '~/resourcePool';
+
 const centerAnchor = new PIXI.Point(0.5, 0.5);
 
 export type PawnTextureFacing = 'north' | 'south' | 'east' | 'west';
@@ -14,19 +16,19 @@ export type PawnProps = {
   facing: PawnFacing,
   texture: {|
     body: {|
-      east: {| '@id': string, '@value': PIXI.Texture |},
-      north: {| '@id': string, '@value': PIXI.Texture |},
-      south: {| '@id': string, '@value': PIXI.Texture |},
+      east: string,
+      north: string,
+      south: string,
     |},
     hair: {|
-      east: {| '@id': string, '@value': PIXI.Texture |},
-      north: {| '@id': string, '@value': PIXI.Texture |},
-      south: {| '@id': string, '@value': PIXI.Texture |},
+      east: string,
+      north: string,
+      south: string,
     |},
     head: {|
-      east: {| '@id': string, '@value': PIXI.Texture |},
-      north: {| '@id': string, '@value': PIXI.Texture |},
-      south: {| '@id': string, '@value': PIXI.Texture |},
+      east: string,
+      north: string,
+      south: string,
     |},
   |},
   collider: { type: string, width: number, height: number },
@@ -83,21 +85,21 @@ export default connect(mapState)(function Pawn(
         x={props.x}
         y={props.y}
         scale={{ x: flipLeftRight ? -1 : 1, y: 1 }}
-        texture={props.texture.body[facing]['@value']}
+        texture={resources.getTexture(props.texture.body[facing])}
       />
       <Sprite
         anchor={centerAnchor}
         x={props.x}
         y={props.y - headHeight}
         scale={{ x: flipLeftRight ? -1 : 1, y: 1 }}
-        texture={props.texture.head[facing]['@value']}
+        texture={resources.getTexture(props.texture.head[facing])}
       />
       <Sprite
         anchor={centerAnchor}
         x={props.x}
         y={props.y - headHeight}
         scale={{ x: flipLeftRight ? -1 : 1, y: 1 }}
-        texture={props.texture.hair[facing]['@value']}
+        texture={resources.getTexture(props.texture.hair[facing])}
       />
       {props.inDebugMode && (
         <>

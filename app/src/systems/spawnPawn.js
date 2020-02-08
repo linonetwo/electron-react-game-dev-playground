@@ -26,64 +26,19 @@ export default function spawnPawn({ createEntity, gameEvents }) {
         facing: 'south',
         texture: {
           head: {
-            north: {
-              '@id': `${randomHeadName}_${'north'}`,
-              '@value': new PIXI.Texture.from(
-                resources[`${randomHeadName}_${'north'}`],
-              ),
-            },
-            south: {
-              '@id': `${randomHeadName}_${'south'}`,
-              '@value': new PIXI.Texture.from(
-                resources[`${randomHeadName}_${'south'}`],
-              ),
-            },
-            east: {
-              '@id': `${randomHeadName}_${'east'}`,
-              '@value': new PIXI.Texture.from(
-                resources[`${randomHeadName}_${'east'}`],
-              ),
-            },
+            north: `${randomHeadName}_${'north'}`,
+            south: `${randomHeadName}_${'south'}`,
+            east: `${randomHeadName}_${'east'}`,
           },
           hair: {
-            north: {
-              '@id': `${randomHairName}_${'north'}`,
-              '@value': new PIXI.Texture.from(
-                resources[`${randomHairName}_${'north'}`],
-              ),
-            },
-            south: {
-              '@id': `${randomHairName}_${'south'}`,
-              '@value': new PIXI.Texture.from(
-                resources[`${randomHairName}_${'south'}`],
-              ),
-            },
-            east: {
-              '@id': `${randomHairName}_${'east'}`,
-              '@value': new PIXI.Texture.from(
-                resources[`${randomHairName}_${'east'}`],
-              ),
-            },
+            north: `${randomHairName}_${'north'}`,
+            south: `${randomHairName}_${'south'}`,
+            east: `${randomHairName}_${'east'}`,
           },
           body: {
-            north: {
-              '@id': `${randomBodyName}_${'north'}`,
-              '@value': new PIXI.Texture.from(
-                resources[`${randomBodyName}_${'north'}`],
-              ),
-            },
-            south: {
-              '@id': `${randomBodyName}_${'south'}`,
-              '@value': new PIXI.Texture.from(
-                resources[`${randomBodyName}_${'south'}`],
-              ),
-            },
-            east: {
-              '@id': `${randomBodyName}_${'east'}`,
-              '@value': new PIXI.Texture.from(
-                resources[`${randomBodyName}_${'east'}`],
-              ),
-            },
+            north: `${randomBodyName}_${'north'}`,
+            south: `${randomBodyName}_${'south'}`,
+            east: `${randomBodyName}_${'east'}`,
           },
         },
       };

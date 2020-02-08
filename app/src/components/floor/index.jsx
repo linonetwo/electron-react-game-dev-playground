@@ -4,14 +4,13 @@ import { Sprite, Container, Text } from 'react-pixi-fiber';
 import * as PIXI from 'pixi.js';
 import { connect } from 'react-redux';
 
+import { resources } from '~/resourcePool';
+
 const centerAnchor = new PIXI.Point(0.5, 0.5);
 
 export type IFloorTile = {
   name: string,
-  texture: {|
-    '@id': string,
-    '@value': PIXI.Texture,
-  |},
+  texture: string,
 };
 export type FloorProps = {
   '@type': string,
@@ -32,12 +31,18 @@ type PropFromRedux = { inDebugMode: boolean };
 export default connect(mapState)(function Floor(
   props: FloorProps & PropFromRedux,
 ) {
+  function trimTileTexture(texture) {
+    return new PIXI.Texture(
+      texture,
+      new PIXI.Rectangle(0, 0, props.width, props.height),
+    );
+  }
   return (
     <Container>
       {props.tiles.map((tileRow, indexY) =>
         tileRow.map((tile, indexX) => (
           <Sprite
-            texture={tile.texture}
+            texture={resources.getTexture(tile.texture, trimTileTexture)}
             x={props.width * indexX}
             y={props.height * indexY}
             width={props.width}

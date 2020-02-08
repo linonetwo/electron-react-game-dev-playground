@@ -1,6 +1,26 @@
+// @flow
 /* eslint-disable no-await-in-loop, guard-for-in */
+import * as PIXI from 'pixi.js';
 
-export const resources = {};
+class ResourcePool {
+  index = {}
+  textures = {};
+  addTextureRaw(name: string, rawTexture: string) {
+    this.textures[name] = rawTexture;
+  }
+  getTexture(name: string, modifyTexture: ?Function) {
+    if (!this.textures[name]) return null;
+    if (!(this.textures[name] instanceof PIXI.Texture)) {
+      // generate texture on first load
+      this.textures[name] = new PIXI.Texture.from(this.textures[name]);
+      if (modifyTexture) {
+        this.textures[name] = modifyTexture(this.textures[name]);
+      }
+    }
+    return this.textures[name];
+  }
+}
+export const resources = new ResourcePool();
 
 window.mod.getTextureIndex().then(allTextureIndex => {
   // { core: { heads: { female: [] } }, otherMod: {} }
@@ -14,7 +34,7 @@ window.mod.getTextureIndex().then(allTextureIndex => {
           modName,
           texturePath: `heads/female/${resourceDetailName}.png`,
         });
-        resources[resourceDetailName] = resourceBuffer;
+        resources.addTextureRaw(resourceDetailName, resourceBuffer);
       }
     });
     allTextureIndex[modName].hair.forEach(async resourceName => {
@@ -24,7 +44,7 @@ window.mod.getTextureIndex().then(allTextureIndex => {
           modName,
           texturePath: `hair/${resourceDetailName}.png`,
         });
-        resources[resourceDetailName] = resourceBuffer;
+        resources.addTextureRaw(resourceDetailName, resourceBuffer);
       }
     });
     allTextureIndex[modName].bodies.forEach(async resourceName => {
@@ -34,20 +54,22 @@ window.mod.getTextureIndex().then(allTextureIndex => {
           modName,
           texturePath: `bodies/${resourceDetailName}.png`,
         });
-        resources[resourceDetailName] = resourceBuffer;
+        resources.addTextureRaw(resourceDetailName, resourceBuffer);
       }
     });
-    Object.keys(allTextureIndex[modName].flowers).forEach(async resourceName => {
-      for (const resourceDetailName of allTextureIndex[modName].flowers[
-        resourceName
-      ]) {
-        const resourceBuffer = await window.mod.getTexture({
-          modName,
-          texturePath: `flowers/${resourceName}/${resourceDetailName}.png`,
-        });
-        resources[resourceDetailName] = resourceBuffer;
-      }
-    });
+    Object.keys(allTextureIndex[modName].flowers).forEach(
+      async resourceName => {
+        for (const resourceDetailName of allTextureIndex[modName].flowers[
+          resourceName
+        ]) {
+          const resourceBuffer = await window.mod.getTexture({
+            modName,
+            texturePath: `flowers/${resourceName}/${resourceDetailName}.png`,
+          });
+          resources.addTextureRaw(resourceDetailName, resourceBuffer);
+        }
+      },
+    );
     Object.keys(allTextureIndex[modName].tree).forEach(async resourceName => {
       for (const resourceDetailName of allTextureIndex[modName].tree[
         resourceName
@@ -56,7 +78,7 @@ window.mod.getTextureIndex().then(allTextureIndex => {
           modName,
           texturePath: `tree/${resourceName}/${resourceDetailName}.png`,
         });
-        resources[resourceDetailName] = resourceBuffer;
+        resources.addTextureRaw(resourceDetailName, resourceBuffer);
       }
     });
     allTextureIndex[modName].floors.forEach(async resourceName => {
@@ -64,7 +86,7 @@ window.mod.getTextureIndex().then(allTextureIndex => {
         modName,
         texturePath: `floors/${resourceName}.png`,
       });
-      resources[resourceName] = resourceBuffer;
+      resources.addTextureRaw(resourceName, resourceBuffer);
     });
   }
 });
