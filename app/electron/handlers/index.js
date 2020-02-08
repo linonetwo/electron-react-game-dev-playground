@@ -1,1 +1,2 @@
 require('./getTexture');
+require('./saveMap');

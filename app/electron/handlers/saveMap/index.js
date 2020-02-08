@@ -28,6 +28,7 @@ ipcMain.handle('save-map', async (event, mapData) => {
 
 // load chunk metadata so we can know which chunk to load first
 ipcMain.handle('load-map-metadata', async (event, mapName) => {
+  // TODO: add screenshot to save metadata
   const protocolRoot = await protobuf.load(
     path.join(__dirname, 'MapMetadata.proto'),
   );
