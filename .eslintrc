@@ -47,6 +47,7 @@
     "arrow-parens": ["off"],
     "consistent-return": "off",
     "new-cap": "off",
+    "lines-between-class-members": "off",
     "react/destructuring-assignment": "off",
     "react/require-default-props": "off",
     "react/no-array-index-key": "off",
