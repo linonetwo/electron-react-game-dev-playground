@@ -23,6 +23,9 @@
     "jest/globals": true
   },
   "rules": {
+    "import/resolver": {
+      "babel-module": {}
+    },
     "comma-dangle": [
       "error",
       {

@@ -5,12 +5,9 @@
         {
           "cwd": "babelrc",
           "alias": {
-            "Constants": "./app/src/constants",
-            "Components": "./app/src/components",
-            "Core": "./app/src/core",
-            "Pages": "./app/src/pages",
-            "Redux": "./app/src/redux",
-            "I18n": "./app/localization"
+            "~": "./app/src",
+            "constants": "./app/src/constants",
+            "components": "./app/src/components"
           }
         }
       ],

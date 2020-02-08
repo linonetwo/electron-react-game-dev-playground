@@ -2,6 +2,12 @@
 
 Play with game development with electron and react pixi.
 
+## Development
+
+### Config your editor for `babel-plugin-module-resolver`
+
+- [VSCode](https://github.com/tleunen/babel-plugin-module-resolver/issues/92#issuecomment-285755384)
+
 ## Resources
 
 I use following resources in this demo, I can replace them if I violates your CC license:
