@@ -23,6 +23,14 @@ export type WallProps = {
 };
 export type WallPropsWithRenderer = WallProps & { Renderer: Function };
 
+function getWallTexturePart(type: string) {
+  const paramByType = {
+    'wall-standalone': [0, 192, 64, 64],
+  };
+  return texture =>
+    new PIXI.Texture(texture, new PIXI.Rectangle(...paramByType[type]));
+}
+
 const mapState = ({ debug: { inDebugMode } }) => ({
   inDebugMode,
 });
@@ -35,7 +43,11 @@ export default connect(mapState)(function Wall(
       {props.walls.map(wall => (
         <>
           <Sprite
-            texture={resources.getTexture(wall.texture)}
+            texture={resources.getTexture(
+              `${wall.texture}_${wall['@type']}`,
+              getWallTexturePart(wall['@type']),
+              wall.texture,
+            )}
             x={wall.x}
             y={wall.y}
             width={wall.collider.width}
