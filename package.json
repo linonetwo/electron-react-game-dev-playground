@@ -75,7 +75,7 @@
     "i18next": "^19.1.0",
     "i18next-electron-fs-backend": "^1.1.2",
     "immer": "^5.3.4",
-    "lodash.merge": "^4.6.2",
+    "lodash": "^4.17.15",
     "pixi.js": "^5.2.1",
     "protobufjs": "^6.8.8",
     "react": "^16.12.0",

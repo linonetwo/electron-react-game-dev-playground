@@ -52,13 +52,13 @@ ipcMain.handle('load-all-map-metadata', async () => {
 });
 
 // load map detail chunk
-ipcMain.handle('load-map-chunk', async (event, { mapName, chunkID }) => {
+ipcMain.handle('load-map-chunk', async (event, { saveName, chunkID }) => {
   const protocolRoot = await protobuf.load(
     path.join(__dirname, 'MapChunk.proto'),
   );
   const MapChunk = protocolRoot.lookupType('MapChunk');
   const buffer = await fs.readFile(
-    path.join(__dirname, `${mapName}.${chunkID}.protocolbuffer`),
+    path.join(getSaveDirPath(saveName), `${saveName}.${chunkID}.protocolbuffer`),
   );
 
   const message = MapChunk.decode(buffer);
@@ -72,7 +72,7 @@ ipcMain.handle('load-map-chunk', async (event, { mapName, chunkID }) => {
     '@type': type,
     x,
     y,
-    ...rest,
+    ...JSON.parse(rest),
   }));
   return entities;
 });

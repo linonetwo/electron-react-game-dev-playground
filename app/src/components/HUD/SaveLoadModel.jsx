@@ -45,7 +45,6 @@ export default connect(
   const loadAllLoadableSave = useCallback(async () => {
     const metadata: ISaveMetadata[] = await window.save.loadMapMetadataList();
     loadableSaveSetter(metadata);
-    console.warn(`metadata`, JSON.stringify(metadata, null, '  '));
   });
   return (
     <>
@@ -135,10 +134,14 @@ export default connect(
             </Tooltip>
             <Button
               intent={Intent.PRIMARY}
-              onClick={() => {
+              onClick={async () => {
+                const entitiesToLoad = await window.save.loadMapChunk({
+                  saveName: saveNameToLoad,
+                  chunkID: 0,
+                });
                 props.dispatchGameEvent({
                   type: 'load-map',
-                  payload: { name: saveNameToLoad },
+                  payload: { entities: entitiesToLoad },
                 });
                 toggleLoadDialog();
               }}

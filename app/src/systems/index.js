@@ -9,6 +9,7 @@ import addTree from './addTree';
 import addWall from './addWall';
 import camera from './camera';
 import saveMap from './saveMap';
+import loadMap from './loadMap';
 
 export const initialSystems = [
   movement,
@@ -22,4 +23,5 @@ export const initialSystems = [
   addWall,
   camera,
   saveMap,
+  loadMap,
 ];
