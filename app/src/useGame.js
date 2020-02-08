@@ -13,7 +13,7 @@ export default function useGame(
   initialEntities: Object[] = [],
 ) {
   const [systems] = useState(initialSystems);
-  const [entities, updater] = useEntityComponentSystem(
+  const [renderedEntities, updater, rawEntitiesMap] = useEntityComponentSystem(
     initialEntities,
     systems,
   );
@@ -35,5 +35,5 @@ export default function useGame(
   );
   useGameLoop(handleFrame);
 
-  return [entities, dispatchGameEvent];
+  return [renderedEntities, rawEntitiesMap, dispatchGameEvent];
 }

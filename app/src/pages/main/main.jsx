@@ -18,7 +18,7 @@ const Container = styled.div`
 
 const containerID = 'game-container';
 export default function Main() {
-  const [entities, dispatchGameEvent] = useGame(
+  const [renderedEntities, rawEntitiesMap, dispatchGameEvent] = useGame(
     initialSystems,
     initialEntities,
   );
@@ -26,9 +26,7 @@ export default function Main() {
 
   // get data for HUD and context menu
   const filter = ['mouse', 'underMouse', 'camera'];
-  const dataEntities = entities
-    .filter(entity => filter.includes(entity.props['@type']))
-    .map(entity => entity.props);
+  const dataEntities: Object[] = Object.values(rawEntitiesMap);
   const mouseEntity = dataEntities.find(entity => entity['@type'] === 'mouse');
   const cameraEntity = dataEntities.find(
     entity => entity['@type'] === 'camera',
@@ -75,7 +73,7 @@ export default function Main() {
                 contextMenuIsOpenSetter(false);
               }}
             >
-              <Provider store={store}>{entities}</Provider>
+              <Provider store={store}>{renderedEntities}</Provider>
             </Stage>
           )}
         </ReactReduxContext.Consumer>
