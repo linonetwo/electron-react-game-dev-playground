@@ -3,7 +3,7 @@ syntax = "proto3";
 message MapMetadata {
   string name = 1;
   string saveTime = 2;
-  string playTime = 3;
+  int64 playTime = 3;
   
   message MapChunkMetadata {
     // center of the map

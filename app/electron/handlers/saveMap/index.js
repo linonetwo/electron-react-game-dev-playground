@@ -6,7 +6,7 @@ const fs = require('fs').promises;
 
 const { saveMapMetadata, saveMapChunk } = require('./saveProtobuf');
 
-ipcMain.handle('save-map', async (event, mapData) => {
+ipcMain.on('save-map', async (event, mapData) => {
   const { name, openTime, previousPlayTime, entities } = mapData;
 
   const saveTime = new Date();

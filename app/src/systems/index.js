@@ -8,6 +8,7 @@ import addFloorTile from './addFloorTile';
 import addTree from './addTree';
 import addWall from './addWall';
 import camera from './camera';
+import saveMap from './saveMap';
 
 export const initialSystems = [
   movement,
@@ -20,4 +21,5 @@ export const initialSystems = [
   addTree,
   addWall,
   camera,
+  saveMap,
 ];

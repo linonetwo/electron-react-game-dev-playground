@@ -33,7 +33,7 @@ async function saveMapMetadata(
 async function saveMapChunk(mapName, entities) {
   // TODO: chunking
   const protocolRoot = await protobuf.load(
-    path.join(__dirname, 'MapMetadata.proto'),
+    path.join(__dirname, 'MapChunk.proto'),
   );
   const MapChunk = protocolRoot.lookupType('MapChunk');
 

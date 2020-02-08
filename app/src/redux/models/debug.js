@@ -4,7 +4,6 @@ export default {
     inDebugMode: false,
   },
   reducers: {
-    // handle state changes with pure functions
     toggleDebugMode(state) {
       state.inDebugMode = !state.inDebugMode;
     },

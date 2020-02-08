@@ -4,7 +4,10 @@ import { Menu, MenuItem, MenuDivider } from '@blueprintjs/core';
 
 import type { DispatchGameEvent } from 'systems/typing';
 
-export default function getDebugMenu(dispatchGameEvent: DispatchGameEvent) {
+export default function getDebugMenu(
+  dispatchGameEvent: DispatchGameEvent,
+  toggleDialog: (dialogName: string) => void,
+) {
   return (
     <Menu>
       <MenuItem
@@ -30,9 +33,17 @@ export default function getDebugMenu(dispatchGameEvent: DispatchGameEvent) {
         shouldDismissPopover={false}
       />
       <MenuDivider />
-      <MenuItem icon="cog" text="Settings...">
-        <MenuItem icon="add" text="Add new application" disabled />
-        <MenuItem icon="remove" text="Remove application" />
+      <MenuItem icon="floppy-disk" text="Saving...">
+        <MenuItem
+          icon="cloud-upload"
+          text="Save As..."
+          onClick={() => toggleDialog('save')}
+        />
+        <MenuItem
+          icon="cloud-download"
+          text="Load..."
+          onClick={() => toggleDialog('load')}
+        />
       </MenuItem>
     </Menu>
   );
