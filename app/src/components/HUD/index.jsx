@@ -62,6 +62,12 @@ export default connect(
           icon="insert"
           text="Add Floor"
         />
+        <Button
+          onClick={() => props.dispatchGameEvent({ type: 'add-tree' })}
+          className={Classes.MINIMAL}
+          icon="tree"
+          text="Add Tree"
+        />
         <DebugSwitch
           checked={props.inDebugMode}
           label="Debug"

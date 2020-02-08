@@ -1,10 +1,12 @@
 // @flow
 import React from 'react';
-import { Sprite, Container, CustomPIXIComponent, Text } from 'react-pixi-fiber';
+import { Sprite, Container, Text } from 'react-pixi-fiber';
 import * as PIXI from 'pixi.js';
 import { connect } from 'react-redux';
 
 import { resources } from '~/resourcePool';
+
+import ColliderBoxDebug from 'components/Debug/ColliderBoxDebug';
 
 const centerAnchor = new PIXI.Point(0.5, 0.5);
 
@@ -37,31 +39,6 @@ export type PawnProps = {
   baseMoveSpeed: number,
 };
 export type PawnPropsWithRenderer = PawnProps & { Renderer: Function };
-
-const TYPE = 'Rect';
-const behavior = {
-  customDisplayObject: props => new PIXI.Graphics(),
-  customApplyProps(instance, oldProps, newProps) {
-    const { lineStyle, x, y, width, height, ...newPropsRest } = newProps;
-    const {
-      lineStyle: oldLineStyle,
-      x: oldX,
-      y: oldY,
-      width: oldWidth,
-      height: oldHeight,
-      ...oldPropsRest
-    } = oldProps || {};
-    if (typeof oldProps !== 'undefined') {
-      instance.clear();
-    }
-    instance.lineStyle(1, lineStyle.color, 0.6);
-    instance.drawRect(x, y, width, height);
-
-    this.applyDisplayObjectProps(oldPropsRest, newPropsRest);
-  },
-};
-
-const ColliderBoxDebug = CustomPIXIComponent(behavior, TYPE);
 
 const mapState = ({ debug: { inDebugMode } }) => ({
   inDebugMode,
