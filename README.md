@@ -17,3 +17,4 @@ I use following resources in this demo, I can replace them if I violates your CC
 [FE3H Black Eagles Hair](https://steamcommunity.com/sharedfiles/filedetails/?id=1962075314)
 [SZ_Floors](https://steamcommunity.com/sharedfiles/filedetails/?id=1874668171)
 [VGP Xtra Trees and Flowers](https://steamcommunity.com/sharedfiles/filedetails/?id=1185281838)
+[Glitter Tech](https://steamcommunity.com/sharedfiles/filedetails/?id=725576127)

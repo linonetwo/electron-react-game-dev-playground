@@ -50,6 +50,16 @@
     "TreeCherryBlossom_Leafless": ["TreeCherryBlossom_Leafless"],
     "TreeJapaneseMaple_Leafless": ["TreeJapaneseMaple_Leafless"]
   },
+  "wall": [
+    "Light_Atlas",
+    "Shield_Atlas",
+    "Titanium_Atlas",
+    "Window_Atlas",
+    "Light_MenuIcon",
+    "Shield_MenuIcon",
+    "Titanium_MenuIcon",
+    "Window_MenuIcon"
+  ],
   "hair": [
     "Bernadetta",
     "Caspar",
