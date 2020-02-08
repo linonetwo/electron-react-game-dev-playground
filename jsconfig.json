@@ -4,7 +4,8 @@
     "paths": {
       "~/*": ["app/src/*"],
       "constants/*": ["app/src/constants/*"],
-      "components/*": ["app/src/components/*"]
+      "components/*": ["app/src/components/*"],
+      "systems/*": ["app/src/systems/*"]
     }
   },
   "exclude": ["node_modules"]
