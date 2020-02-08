@@ -2,7 +2,9 @@
 import React from 'react';
 import { Menu, MenuItem, MenuDivider } from '@blueprintjs/core';
 
-export default function getDebugMenu(dispatchGameEvent) {
+import type { DispatchGameEvent } from 'systems/typing';
+
+export default function getDebugMenu(dispatchGameEvent: DispatchGameEvent) {
   return (
     <Menu>
       <MenuItem

@@ -1,12 +1,12 @@
 // @flow
-import { original } from 'immer';
+import type { SystemInput } from 'systems/typing';
 
-export default function listEntityUnderMouse({ entities }) {
+export default function listEntityUnderMouse({ entities }: SystemInput) {
   const mouseEntity = entities.find(entity => entity['@type'] === 'mouse');
   const underMouseEntity = entities.find(
     entity => entity['@type'] === 'underMouse',
   );
-  if (mouseEntity) {
+  if (mouseEntity && underMouseEntity) {
     const entityWithCollider = entities.filter(
       entity => 'collider' in entity && 'x' in entity && 'y' in entity,
     );

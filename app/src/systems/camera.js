@@ -1,5 +1,7 @@
 // @flow
-export default function camera({ entities, keysDown }) {
+import type { SystemInput } from 'systems/typing';
+
+export default function camera({ entities, keysDown }: SystemInput) {
   const cameraEntity = entities.find(e => e['@type'] === 'camera');
   const protagonistPawn = entities.find(e => e['@type'] === 'protagonistPawn');
   if (cameraEntity) {

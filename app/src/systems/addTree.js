@@ -1,17 +1,19 @@
 // @flow
 import React from 'react';
-import * as PIXI from 'pixi.js';
 import Tree from 'components/tree';
 import type { TreeProps, ITree, TreePropsWithRenderer } from 'components/tree';
+import type { SystemInput } from 'systems/typing';
 import { resources } from '~/resourcePool';
 
 function randomItem(items) {
   return items[Math.floor(Math.random() * items.length)];
 }
 
-export default function addTree({ createEntity, gameEvents }) {
+export default function addTree({ createEntity, gameEvents }: SystemInput) {
   gameEvents.forEach(event => {
     if (event.type === 'add-tree') {
+      if (!resources.index.core) return;
+      const treeList = resources.index.core.tree;
       const treeEntity: TreePropsWithRenderer = {
         '@type': 'tree',
         trees: [],
@@ -20,10 +22,10 @@ export default function addTree({ createEntity, gameEvents }) {
 
       for (let index = 10; index <= 100; index += 1) {
         const randomTreeName = randomItem(
-          Object.keys(resources.index.core.tree),
+          Object.keys(treeList),
         );
         const randomTreeDetailName = randomItem(
-          resources.index.core.tree[randomTreeName],
+          treeList[randomTreeName],
         );
         const tree: ITree = {
           name: `${randomTreeDetailName} ${String(Math.random()).substring(

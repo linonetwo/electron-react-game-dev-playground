@@ -1,21 +1,22 @@
 // @flow
 import React from 'react';
-import * as PIXI from 'pixi.js';
 import Floor from 'components/floor';
 import type {
   FloorProps,
   IFloorTile,
   FloorPropsWithRenderer,
 } from 'components/floor';
+import type { SystemInput } from 'systems/typing';
 import { resources } from '~/resourcePool';
 
 function randomItem(items) {
   return items[Math.floor(Math.random() * items.length)];
 }
 
-export default function addFloorTile({ createEntity, gameEvents }) {
+export default function addFloorTile({ createEntity, gameEvents }: SystemInput) {
   gameEvents.forEach(event => {
     if (event.type === 'add-floor') {
+      if (!resources.index.core) return;
       const randomFloorName = randomItem(resources.index.core.floors);
       const floorEntity: FloorPropsWithRenderer = {
         '@type': 'floor',

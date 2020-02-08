@@ -1,20 +1,23 @@
 // @flow
 import React from 'react';
-import * as PIXI from 'pixi.js';
 import Pawn from 'components/pawn';
 import type { PawnProps, PawnPropsWithRenderer } from 'components/pawn';
+
+import type { SystemInput } from 'systems/typing';
 import { resources } from '~/resourcePool';
 
 function randomItem(items) {
   return items[Math.floor(Math.random() * items.length)];
 }
 
-export default function spawnPawn({ createEntity, gameEvents }) {
+export default function spawnPawn({ createEntity, gameEvents }: SystemInput) {
   gameEvents.forEach(event => {
     if (event.type === 'spawn-pawn' || event.type === 'spawn-protagonist-pawn') {
-      const randomHeadName = randomItem(resources.index.core.heads.female);
-      const randomHairName = randomItem(resources.index.core.hair);
-      const randomBodyName = randomItem(resources.index.core.bodies);
+      if (!resources.index.core) return;
+      const coreIndex = resources.index.core;
+      const randomHeadName = randomItem(coreIndex.heads.female);
+      const randomHairName = randomItem(coreIndex.hair);
+      const randomBodyName = randomItem(coreIndex.bodies);
       const pawnEntity: PawnPropsWithRenderer = {
         '@type': event.type === 'spawn-pawn' ? 'pawn' : 'protagonistPawn',
         name: `ID${String(Math.random()).substring(2, 6)}`,

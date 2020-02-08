@@ -1,6 +1,5 @@
 // @flow
 import React, { useState } from 'react';
-import type { Element } from 'react';
 import styled from 'styled-components';
 import { Stage } from 'react-pixi-fiber';
 import { ReactReduxContext, Provider } from 'react-redux';
@@ -8,6 +7,7 @@ import { ReactReduxContext, Provider } from 'react-redux';
 import HUD from 'components/HUD';
 import ContextMenu from 'components/ContextMenu';
 import { initialSystems } from '~/systems';
+import type { IEvent } from '~/systems/typing';
 import { initialEntities } from '~/entites';
 import useGame from '~/useGame';
 
@@ -25,7 +25,6 @@ export default function Main() {
   const [contextMenuIsOpen, contextMenuIsOpenSetter] = useState(false);
 
   // get data for HUD and context menu
-  const filter = ['mouse', 'underMouse', 'camera'];
   const dataEntities: Object[] = Object.values(rawEntitiesMap);
   const mouseEntity = dataEntities.find(entity => entity['@type'] === 'mouse');
   const cameraEntity = dataEntities.find(
@@ -55,11 +54,11 @@ export default function Main() {
                 width: window.innerWidth,
               }}
               onMouseMove={event => {
-                dispatchGameEvent({
+                const mouseMoveEvent: IEvent = {
                   type: 'mouse-move',
-                  x: event.clientX,
-                  y: event.clientY,
-                });
+                  payload: { x: event.clientX, y: event.clientY },
+                };
+                dispatchGameEvent(mouseMoveEvent);
               }}
               onContextMenu={event => {
                 event.preventDefault();

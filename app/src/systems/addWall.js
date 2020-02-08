@@ -1,15 +1,10 @@
 // @flow
 import React from 'react';
-import * as PIXI from 'pixi.js';
 import Wall from 'components/wall';
 import type { WallProps, IWall, WallPropsWithRenderer } from 'components/wall';
-import { resources } from '~/resourcePool';
+import type { SystemInput } from 'systems/typing';
 
-function randomItem(items) {
-  return items[Math.floor(Math.random() * items.length)];
-}
-
-export default function addWall({ createEntity, gameEvents }) {
+export default function addWall({ createEntity, gameEvents }: SystemInput) {
   gameEvents.forEach(event => {
     if (event.type === 'add-wall') {
       const wallEntity: WallPropsWithRenderer = {
