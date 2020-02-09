@@ -17,6 +17,9 @@ import { connect } from 'react-redux';
 import getDebugMenu from './getDebugMenu';
 import SaveLoadModel from './SaveLoadModel';
 
+const Nav = styled(Navbar)`
+  position: absolute;
+`;
 const DebugSwitch = styled(Switch)`
   margin-bottom: 0;
   margin-left: 10px;
@@ -46,7 +49,7 @@ export default connect(
   return (
     <>
       <SaveLoadModel dispatchGameEvent={props.dispatchGameEvent} />
-      <Navbar>
+      <Nav>
         <NavbarGroup align={Alignment.LEFT}>
           <Popover
             content={getDebugMenu(props.dispatchGameEvent, props.toggleDialog)}
@@ -73,7 +76,7 @@ export default connect(
         <NavbarGroup align={Alignment.RIGHT}>
           <Button className={Classes.MINIMAL} icon="cog" />
         </NavbarGroup>
-      </Navbar>
+      </Nav>
     </>
   );
 });
