@@ -10,6 +10,11 @@ import type { IMoveableRigidBody } from '~/entities/components/moveableRigidBody
 
 const centerAnchor = new PIXI.Point(0.5, 0.5);
 
+export type PawnExtraDescriptions = {
+  baseMoveSpeed: number,
+  baseOperationRange: number,
+  buff: Object[],
+}
 export type PawnTextureFacing = 'north' | 'south' | 'east' | 'west';
 export type PawnFacing = PawnTextureFacing | 'west';
 export type PawnProps = {

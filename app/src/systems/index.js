@@ -14,6 +14,8 @@ import loadMap from './loadMap';
 import collisionPredict from './collisionPredict';
 import collisionResolve from './collisionResolve';
 import cullObjectOutsideCamera from './cullObjectOutsideCamera';
+import protagonistPawnChopTree from './protagonistPawnChopTree';
+import chopDownTree from './chopDownTree';
 
 export const initialSystems = [
   pawnMovement,
@@ -36,4 +38,6 @@ export const initialSystems = [
   saveMap,
   loadMap,
   cullObjectOutsideCamera,
+  protagonistPawnChopTree,
+  chopDownTree,
 ];

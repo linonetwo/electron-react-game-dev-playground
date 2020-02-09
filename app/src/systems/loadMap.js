@@ -2,7 +2,7 @@
 import React from 'react';
 import type { SystemInput } from 'systems/typing';
 
-import Tree from 'components/tree';
+import { getTree } from 'components/tree';
 import Wall from 'components/wall';
 import Floor from 'components/floor';
 import Pawn from 'components/pawn';
@@ -10,7 +10,7 @@ import Pawn from 'components/pawn';
 const entityDeSerializer = {
   tree: entity => {
     return {
-      Renderer: props => <Tree {...props} />,
+      ...getTree(),
       ...entity,
     };
   },

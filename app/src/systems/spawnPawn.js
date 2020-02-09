@@ -25,6 +25,7 @@ export default function spawnPawn({ createEntity, gameEvents }: SystemInput) {
         Renderer: (props: PawnProps) => <Pawn {...props} />,
         ...moveableRigidBody,
         baseMoveSpeed: 500,
+        baseOperationRange: 300,
         collider: { type: 'block', width: 160, height: 160 },
         facing: 'south',
         texture: {

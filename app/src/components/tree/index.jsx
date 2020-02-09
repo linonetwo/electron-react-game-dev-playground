@@ -7,6 +7,11 @@ import { connect } from 'react-redux';
 import ColliderBoxDebug from 'components/Debug/ColliderBoxDebug';
 import { resources } from '~/resourcePool';
 import type { IRigidBody } from '~/entities/components/rigidBody';
+import type { IAffectable } from '~/entities/components/affectable';
+import type { IBreakable } from '~/entities/components/breakable';
+import type { BaseEntity } from '~/systems/typing';
+import affectable from '~/entities/components/affectable';
+import breakable from '~/entities/components/breakable';
 
 const centerAnchor = new PIXI.Point(0.5, 0.5);
 export type TreeProps = {
@@ -14,14 +19,17 @@ export type TreeProps = {
   name: string,
   collider: { type: string, width: number, height: number },
   textureName: string,
-} & IRigidBody;
+} & IRigidBody &
+  IAffectable &
+  IBreakable &
+  BaseEntity;
 export type TreePropsWithRenderer = TreeProps & { Renderer: Function };
 
 const mapState = ({ debug: { inDebugMode } }) => ({
   inDebugMode,
 });
 type PropFromRedux = { inDebugMode: boolean };
-export default connect(mapState)(function Tree(props: TreeProps & PropFromRedux) {
+const Tree = connect(mapState)((props: TreeProps & PropFromRedux) => {
   return (
     <Container>
       <Sprite
@@ -51,4 +59,17 @@ export default connect(mapState)(function Tree(props: TreeProps & PropFromRedux)
       )}
     </Container>
   );
+});
+export default Tree;
+
+export const getTree = (name: string = '', position: number[] = [0, 0]): TreePropsWithRenderer => ({
+  '@type': 'tree',
+  Renderer: (props: TreeProps) => <Tree {...props} />,
+  renderable: true,
+  name: `${name} ${String(Math.random()).substring(2, 6)}`,
+  textureName: name,
+  collider: { type: 'block', width: 100, height: 100 },
+  position,
+  ...affectable,
+  ...breakable,
 });
