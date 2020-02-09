@@ -22,15 +22,10 @@ const mapState = ({ debug: { inDebugMode } }) => ({
   inDebugMode,
 });
 type PropFromRedux = { inDebugMode: boolean };
-export default connect(mapState)(function Floor(
-  props: FloorProps & PropFromRedux,
-) {
+export default connect(mapState)(function Floor(props: FloorProps & PropFromRedux) {
   const trimTileTexture = useCallback(
     texture => {
-      return new PIXI.Texture(
-        texture,
-        new PIXI.Rectangle(0, 0, props.width, props.height),
-      );
+      return new PIXI.Texture(texture, new PIXI.Rectangle(0, 0, props.width, props.height));
     },
     [props.width, props.height],
   );

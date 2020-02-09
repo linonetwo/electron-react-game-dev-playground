@@ -1,23 +1,13 @@
 // @flow
 import React, { useState, useCallback } from 'react';
-import {
-  Button,
-  Classes,
-  Dialog,
-  Intent,
-  FormGroup,
-  Tooltip,
-  MenuItem,
-} from '@blueprintjs/core';
+import { Button, Classes, Dialog, Intent, FormGroup, Tooltip, MenuItem } from '@blueprintjs/core';
 import { Suggest } from '@blueprintjs/select';
 import { connect } from 'react-redux';
 import formatDistance from 'date-fns/formatDistance';
 
 import type { ISaveMetadata } from '~/typings';
 
-const mapState = ({
-  dialog: { save: saveDialogOpen, load: loadDialogOpen },
-}) => ({
+const mapState = ({ dialog: { save: saveDialogOpen, load: loadDialogOpen } }) => ({
   saveDialogOpen,
   loadDialogOpen,
 });
@@ -59,12 +49,7 @@ export default connect(
         }}
       >
         <div className={Classes.DIALOG_BODY}>
-          <FormGroup
-            helperText="Choose a name for your save"
-            label="Name"
-            labelFor="text-input"
-            labelInfo="(required)"
-          >
+          <FormGroup helperText="Choose a name for your save" label="Name" labelFor="text-input" labelInfo="(required)">
             <Suggest
               items={loadableSave}
               inputValueRenderer={(item: ISaveMetadata) => item.name}
@@ -78,27 +63,16 @@ export default connect(
                 playTime: new Date(0),
                 saveTime: Date.now(),
               })}
-              createNewItemRenderer={(
-                query: string,
-                active: boolean,
-                handleClick,
-              ) => {
-                return (
-                  <MenuItem
-                    label={`new Save ${query}`}
-                    key={query}
-                    onClick={handleClick}
-                    text={query}
-                  />
-                );
+              createNewItemRenderer={(query: string, active: boolean, handleClick) => {
+                return <MenuItem label={`new Save ${query}`} key={query} onClick={handleClick} text={query} />;
               }}
               itemRenderer={(item: ISaveMetadata, { handleClick }) => {
                 return (
                   <MenuItem
-                    label={`Last played: ${formatDistance(
-                      new Date(item.saveTime),
-                      new Date(),
-                    )} ago (${formatDistance(item.playTime, 0)})`}
+                    label={`Last played: ${formatDistance(new Date(item.saveTime), new Date())} ago (${formatDistance(
+                      item.playTime,
+                      0,
+                    )})`}
                     key={item.name}
                     onClick={handleClick}
                     text={item.name}
@@ -142,12 +116,7 @@ export default connect(
         }}
       >
         <div className={Classes.DIALOG_BODY}>
-          <FormGroup
-            helperText="Choose a save file to load"
-            label="Name"
-            labelFor="text-input"
-            labelInfo="(required)"
-          >
+          <FormGroup helperText="Choose a save file to load" label="Name" labelFor="text-input" labelInfo="(required)">
             <Suggest
               items={loadableSave}
               inputValueRenderer={(item: ISaveMetadata) => item.name}
@@ -158,10 +127,10 @@ export default connect(
               itemRenderer={(item: ISaveMetadata, { handleClick }) => {
                 return (
                   <MenuItem
-                    label={`Last played: ${formatDistance(
-                      new Date(item.saveTime),
-                      new Date(),
-                    )} ago (${formatDistance(item.playTime, 0)})`}
+                    label={`Last played: ${formatDistance(new Date(item.saveTime), new Date())} ago (${formatDistance(
+                      item.playTime,
+                      0,
+                    )})`}
                     key={item.name}
                     onClick={handleClick}
                     text={item.name}

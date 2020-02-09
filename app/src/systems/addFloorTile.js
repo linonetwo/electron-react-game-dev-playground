@@ -1,10 +1,7 @@
 // @flow
 import React from 'react';
 import Floor from 'components/floor';
-import type {
-  FloorProps,
-  FloorPropsWithRenderer,
-} from 'components/floor';
+import type { FloorProps, FloorPropsWithRenderer } from 'components/floor';
 import type { SystemInput } from 'systems/typing';
 import { resources } from '~/resourcePool';
 
@@ -12,10 +9,7 @@ function randomItem(items) {
   return items[Math.floor(Math.random() * items.length)];
 }
 
-export default function addFloorTile({
-  createEntity,
-  gameEvents,
-}: SystemInput) {
+export default function addFloorTile({ createEntity, gameEvents }: SystemInput) {
   gameEvents.forEach(event => {
     if (event.type === 'add-floor') {
       if (!resources.index.core) return;
@@ -30,10 +24,7 @@ export default function addFloorTile({
           height: 64,
           textureName: randomFloorName,
           name: `${randomFloorName} ${String(Math.random()).substring(2, 6)}`,
-          position: [
-            Math.floor(Math.random() * index * 100),
-            Math.floor(Math.random() * index * 100),
-          ],
+          position: [Math.floor(Math.random() * index * 100), Math.floor(Math.random() * index * 100)],
         };
         createEntity(tile);
       }

@@ -2,11 +2,7 @@
 import { vScale, vSub, vAdd } from 'vec-la-fp';
 import type { SystemInput } from 'systems/typing';
 
-export default function camera({
-  entities,
-  keysDown,
-  gameEvents,
-}: SystemInput) {
+export default function camera({ entities, keysDown, gameEvents }: SystemInput) {
   const cameraEntity = entities.find(e => e['@type'] === 'camera');
   const protagonistPawn = entities.find(e => e['@type'] === 'protagonistPawn');
   if (cameraEntity) {

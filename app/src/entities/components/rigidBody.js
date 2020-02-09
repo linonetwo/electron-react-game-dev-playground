@@ -1,7 +1,7 @@
 // @flow
 export type IRigidBody = {
   position: number[],
-  renderable: boolean
+  renderable: boolean,
 };
 
 export default {

@@ -7,10 +7,7 @@ import type { SystemInput } from 'systems/typing';
 export default function acceleration({ entities, timeDiff }: SystemInput) {
   for (const entity of entities) {
     if ('velocity' in entity && 'acceleration' in entity) {
-      entity.velocity = vAdd(
-        entity.velocity,
-        vScale(timeDiff, entity.acceleration),
-      );
+      entity.velocity = vAdd(entity.velocity, vScale(timeDiff, entity.acceleration));
     }
   }
 }

@@ -19,24 +19,15 @@ const Container = styled.div`
 
 const containerID = 'game-container';
 export default function Main() {
-  const [renderedEntities, rawEntitiesMap, dispatchGameEvent] = useGame(
-    initialSystems,
-    initialEntities,
-  );
+  const [renderedEntities, rawEntitiesMap, dispatchGameEvent] = useGame(initialSystems, initialEntities);
   const [contextMenuIsOpen, contextMenuIsOpenSetter] = useState(false);
 
   // get data for HUD and context menu
   const dataEntities: Object[] = Object.values(rawEntitiesMap);
   const mouseEntity = dataEntities.find(entity => entity['@type'] === 'mouse');
-  const cameraEntity = dataEntities.find(
-    entity => entity['@type'] === 'camera',
-  );
-  const entitiesUnderMouseEntity = dataEntities.find(
-    entity => entity['@type'] === 'underMouse',
-  );
-  const entitiesUnderMouse = entitiesUnderMouseEntity
-    ? entitiesUnderMouseEntity.entities
-    : [];
+  const cameraEntity = dataEntities.find(entity => entity['@type'] === 'camera');
+  const entitiesUnderMouseEntity = dataEntities.find(entity => entity['@type'] === 'underMouse');
+  const entitiesUnderMouse = entitiesUnderMouseEntity ? entitiesUnderMouseEntity.entities : [];
 
   // handle window resize
   useWindowResize(() => {

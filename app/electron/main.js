@@ -19,9 +19,7 @@ const installExtensions = async () => {
   const forceDownload = !!process.env.UPGRADE_EXTENSIONS;
   const extensions = ['REACT_DEVELOPER_TOOLS', 'REDUX_DEVTOOLS'];
 
-  return Promise.all(
-    extensions.map(name => installer.default(installer[name], forceDownload)),
-  ).catch(console.log);
+  return Promise.all(extensions.map(name => installer.default(installer[name], forceDownload))).catch(console.log);
 };
 
 // Keep a global reference of the window object, if you don't, the window will
@@ -89,21 +87,19 @@ async function createWindow() {
   // https://electronjs.org/docs/tutorial/security#4-handle-session-permission-requests-from-remote-content
   const ses = session;
   const partition = 'default';
-  ses
-    .fromPartition(partition)
-    .setPermissionRequestHandler((webContents, permission, callback) => {
-      const allowedPermissions = []; // Full list here: https://developer.chrome.com/extensions/declare_permissions#manifest
+  ses.fromPartition(partition).setPermissionRequestHandler((webContents, permission, callback) => {
+    const allowedPermissions = []; // Full list here: https://developer.chrome.com/extensions/declare_permissions#manifest
 
-      if (allowedPermissions.includes(permission)) {
-        callback(true); // Approve permission request
-      } else {
-        console.error(
-          `The application tried to request permission for '${permission}'. This permission was not whitelisted and has been blocked.`,
-        );
+    if (allowedPermissions.includes(permission)) {
+      callback(true); // Approve permission request
+    } else {
+      console.error(
+        `The application tried to request permission for '${permission}'. This permission was not whitelisted and has been blocked.`,
+      );
 
-        callback(false); // Deny
-      }
-    });
+      callback(false); // Deny
+    }
+  });
 
   // https://electronjs.org/docs/tutorial/security#1-only-load-secure-content;
   // The below code can only run when a scheme and host are defined, I thought

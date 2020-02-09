@@ -39,10 +39,7 @@ type HoverMenuState = {
   items: IMenuItem[],
   position: number[],
 };
-export default class HoverMenu extends Component<
-  HoverMenuProps,
-  HoverMenuState,
-> {
+export default class HoverMenu extends Component<HoverMenuProps, HoverMenuState> {
   state = {
     filter: '',
     items: [],
@@ -80,14 +77,7 @@ export default class HoverMenu extends Component<
    */
   renderMarkButton = (item: IMenuItem) => {
     const text = `${item.title}${item.type ? ` ${item.type}` : ''}`;
-    return (
-      <MenuItem
-        key={text}
-        text={text}
-        icon={item.icon}
-        onMouseDown={event => this.onClickMark(item, event)}
-      />
-    );
+    return <MenuItem key={text} text={text} icon={item.icon} onMouseDown={event => this.onClickMark(item, event)} />;
   };
 
   getMenuStyle = () => {
@@ -95,8 +85,7 @@ export default class HoverMenu extends Component<
     return {
       opacity: 1,
       top: `calc(${this.state.position[1]}px)`,
-      left: `calc(${this.state.position[0]}px - ${this.menuRef.offsetWidth /
-        2}px)`,
+      left: `calc(${this.state.position[0]}px - ${this.menuRef.offsetWidth / 2}px)`,
     };
   };
 

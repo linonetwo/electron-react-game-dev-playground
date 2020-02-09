@@ -8,10 +8,7 @@ const { original } = require('immer');
 
 const { ensureSaveDir } = require('./getSaveDir');
 
-async function saveMapMetadata(
-  { name, openTime, previousPlayTime, saveTime },
-  chunksMetadata,
-) {
+async function saveMapMetadata({ name, openTime, previousPlayTime, saveTime }, chunksMetadata) {
   const mapMetadata = {
     name,
     saveTime: saveTime.toISOString(),
@@ -19,9 +16,7 @@ async function saveMapMetadata(
     chunks: chunksMetadata,
   };
 
-  const protocolRoot = await protobuf.load(
-    path.join(__dirname, 'MapMetadata.proto'),
-  );
+  const protocolRoot = await protobuf.load(path.join(__dirname, 'MapMetadata.proto'));
   const MapMetadata = protocolRoot.lookupType('MapMetadata');
   const errMsg = MapMetadata.verify(mapMetadata);
   if (errMsg) throw new Error(errMsg);
@@ -37,9 +32,7 @@ async function saveMapMetadata(
 
 async function saveMapChunk(mapName, entities) {
   // TODO: chunking
-  const protocolRoot = await protobuf.load(
-    path.join(__dirname, 'MapChunk.proto'),
-  );
+  const protocolRoot = await protobuf.load(path.join(__dirname, 'MapChunk.proto'));
   const MapChunk = protocolRoot.lookupType('MapChunk');
 
   const chunkID = 0;
@@ -60,10 +53,7 @@ async function saveMapChunk(mapName, entities) {
 
   // create save folder and save the file
   const saveDirName = await ensureSaveDir(mapName);
-  fs.writeFile(
-    path.join(saveDirName, `${mapName}.${chunkID}.protocolbuffer`),
-    buffer,
-  );
+  fs.writeFile(path.join(saveDirName, `${mapName}.${chunkID}.protocolbuffer`), buffer);
 }
 
 exports.saveMapMetadata = saveMapMetadata;

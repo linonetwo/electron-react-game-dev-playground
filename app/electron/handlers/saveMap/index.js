@@ -31,17 +31,13 @@ ipcMain.on('save-map', async (event, mapData) => {
 // load chunk metadata so we can know which chunk to load first
 ipcMain.handle('load-all-map-metadata', async () => {
   // TODO: add screenshot to save metadata
-  const protocolRoot = await protobuf.load(
-    path.join(__dirname, 'MapMetadata.proto'),
-  );
+  const protocolRoot = await protobuf.load(path.join(__dirname, 'MapMetadata.proto'));
   const MapMetadata = protocolRoot.lookupType('MapMetadata');
 
   const availableSaves = await readAvailableSaves();
   const buffers = await Promise.all(
     availableSaves.map(saveName => {
-      return fs.readFile(
-        path.join(getSaveDirPath(saveName), `${saveName}.protocolbuffer`),
-      );
+      return fs.readFile(path.join(getSaveDirPath(saveName), `${saveName}.protocolbuffer`));
     }),
   );
 
@@ -53,24 +49,15 @@ ipcMain.handle('load-all-map-metadata', async () => {
 
 // load map detail chunk
 ipcMain.handle('load-map-chunk', async (event, { saveName, chunkID }) => {
-  const protocolRoot = await protobuf.load(
-    path.join(__dirname, 'MapChunk.proto'),
-  );
+  const protocolRoot = await protobuf.load(path.join(__dirname, 'MapChunk.proto'));
   const MapChunk = protocolRoot.lookupType('MapChunk');
-  const buffer = await fs.readFile(
-    path.join(
-      getSaveDirPath(saveName),
-      `${saveName}.${chunkID}.protocolbuffer`,
-    ),
-  );
+  const buffer = await fs.readFile(path.join(getSaveDirPath(saveName), `${saveName}.${chunkID}.protocolbuffer`));
 
   const message = MapChunk.decode(buffer);
   const mapChunkData = MapChunk.toObject(message);
 
   if (mapChunkData.id !== chunkID)
-    throw new Error(
-      `map chunk ID mismatch: mapChunkData.id=${mapChunkData.id} chunkID=${chunkID}`,
-    );
+    throw new Error(`map chunk ID mismatch: mapChunkData.id=${mapChunkData.id} chunkID=${chunkID}`);
   const entities = mapChunkData.entities.map(({ type, position, rest }) => ({
     '@type': type,
     position,

@@ -9,14 +9,8 @@ const behavior = {
   customDisplayObject: props => new PIXI.Graphics(),
   customApplyProps(instance, oldProps, newProps) {
     const { lineStyle, x, y, width, height, ...newPropsRest } = newProps;
-    const {
-      lineStyle: oldLineStyle,
-      x: oldX,
-      y: oldY,
-      width: oldWidth,
-      height: oldHeight,
-      ...oldPropsRest
-    } = oldProps || {};
+    const { lineStyle: oldLineStyle, x: oldX, y: oldY, width: oldWidth, height: oldHeight, ...oldPropsRest } =
+      oldProps || {};
     if (typeof oldProps !== 'undefined') {
       instance.clear();
     }

@@ -23,17 +23,14 @@ function getWallTexturePart(type: string) {
   const paramByType = {
     'wall-standalone': [0, 192, 64, 64],
   };
-  return texture =>
-    new PIXI.Texture(texture, new PIXI.Rectangle(...paramByType[type]));
+  return texture => new PIXI.Texture(texture, new PIXI.Rectangle(...paramByType[type]));
 }
 
 const mapState = ({ debug: { inDebugMode } }) => ({
   inDebugMode,
 });
 type PropFromRedux = { inDebugMode: boolean };
-export default connect(mapState)(function Wall(
-  props: WallProps & PropFromRedux,
-) {
+export default connect(mapState)(function Wall(props: WallProps & PropFromRedux) {
   return (
     <Container>
       <Sprite

@@ -14,11 +14,7 @@ class ResourcePool {
    * @param {*} modifyTexture Function to do something with texture, return a new texture
    * @param {*} copyFrom Name of resource, You can copy a texture and create a flipped version
    */
-  getTexture(
-    name: string,
-    modifyTexture: Function = i => i,
-    copyFrom: ?string,
-  ) {
+  getTexture(name: string, modifyTexture: Function = i => i, copyFrom: ?string) {
     // generate a new texture from another texture
     if (copyFrom && !this.textures[name] && this.textures[copyFrom]) {
       if (this.textures[copyFrom] instanceof PIXI.Texture) {
@@ -76,23 +72,17 @@ window.mod.getTextureIndex().then(allTextureIndex => {
         resources.addTextureRaw(resourceDetailName, resourceBuffer);
       }
     });
-    Object.keys(allTextureIndex[modName].flowers).forEach(
-      async resourceName => {
-        for (const resourceDetailName of allTextureIndex[modName].flowers[
-          resourceName
-        ]) {
-          const resourceBuffer = await window.mod.getTexture({
-            modName,
-            texturePath: `flowers/${resourceName}/${resourceDetailName}.png`,
-          });
-          resources.addTextureRaw(resourceDetailName, resourceBuffer);
-        }
-      },
-    );
+    Object.keys(allTextureIndex[modName].flowers).forEach(async resourceName => {
+      for (const resourceDetailName of allTextureIndex[modName].flowers[resourceName]) {
+        const resourceBuffer = await window.mod.getTexture({
+          modName,
+          texturePath: `flowers/${resourceName}/${resourceDetailName}.png`,
+        });
+        resources.addTextureRaw(resourceDetailName, resourceBuffer);
+      }
+    });
     Object.keys(allTextureIndex[modName].tree).forEach(async resourceName => {
-      for (const resourceDetailName of allTextureIndex[modName].tree[
-        resourceName
-      ]) {
+      for (const resourceDetailName of allTextureIndex[modName].tree[resourceName]) {
         const resourceBuffer = await window.mod.getTexture({
           modName,
           texturePath: `tree/${resourceName}/${resourceDetailName}.png`,

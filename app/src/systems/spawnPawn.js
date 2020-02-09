@@ -13,10 +13,7 @@ function randomItem(items) {
 
 export default function spawnPawn({ createEntity, gameEvents }: SystemInput) {
   gameEvents.forEach(event => {
-    if (
-      event.type === 'spawn-pawn' ||
-      event.type === 'spawn-protagonist-pawn'
-    ) {
+    if (event.type === 'spawn-pawn' || event.type === 'spawn-protagonist-pawn') {
       if (!resources.index.core) return;
       const coreIndex = resources.index.core;
       const randomHeadName = randomItem(coreIndex.heads.female);

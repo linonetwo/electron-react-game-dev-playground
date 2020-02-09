@@ -47,9 +47,7 @@ const mapState = ({ debug: { inDebugMode } }) => ({
   inDebugMode,
 });
 type PropFromRedux = { inDebugMode: boolean };
-export default connect(mapState)(function Pawn(
-  props: PawnProps & PropFromRedux,
-) {
+export default connect(mapState)(function Pawn(props: PawnProps & PropFromRedux) {
   let { facing } = props;
   let flipLeftRight = false;
   if (facing === 'west') {
@@ -68,11 +66,7 @@ export default connect(mapState)(function Pawn(
         y={props.position[1]}
         texture={
           flipLeftRight
-            ? resources.getTexture(
-                `${props.texture.body[facing]}_flip`,
-                flipTexture,
-                props.texture.body[facing],
-              )
+            ? resources.getTexture(`${props.texture.body[facing]}_flip`, flipTexture, props.texture.body[facing])
             : resources.getTexture(props.texture.body[facing])
         }
       />
@@ -84,11 +78,7 @@ export default connect(mapState)(function Pawn(
         y={props.position[1] - headHeight}
         texture={
           flipLeftRight
-            ? resources.getTexture(
-                `${props.texture.head[facing]}_flip`,
-                flipTexture,
-                props.texture.head[facing],
-              )
+            ? resources.getTexture(`${props.texture.head[facing]}_flip`, flipTexture, props.texture.head[facing])
             : resources.getTexture(props.texture.head[facing])
         }
       />
@@ -100,11 +90,7 @@ export default connect(mapState)(function Pawn(
         y={props.position[1] - headHeight}
         texture={
           flipLeftRight
-            ? resources.getTexture(
-                `${props.texture.hair[facing]}_flip`,
-                flipTexture,
-                props.texture.hair[facing],
-              )
+            ? resources.getTexture(`${props.texture.hair[facing]}_flip`, flipTexture, props.texture.hair[facing])
             : resources.getTexture(props.texture.hair[facing])
         }
       />

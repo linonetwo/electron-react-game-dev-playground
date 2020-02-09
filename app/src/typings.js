@@ -7,11 +7,11 @@ export type ISaveChunkMetadata = {
   width: number,
   height: number,
   id: number,
-}
+};
 /** as app/electron/handlers/saveMap/MapMetadata.proto */
 export type ISaveMetadata = {
   name: string,
   saveTime: string,
   playTime: number,
-  chunks: ISaveChunkMetadata[]
-}
+  chunks: ISaveChunkMetadata[],
+};

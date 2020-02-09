@@ -17,7 +17,11 @@ import cullObjectOutsideCamera from './cullObjectOutsideCamera';
 
 export const initialSystems = [
   pawnMovement,
-  collisionPredict([['protagonistPawn', 'pawn'],['protagonistPawn', 'wall-standalone'], ['protagonistPawn', 'tree']]),
+  collisionPredict([
+    ['protagonistPawn', 'pawn'],
+    ['protagonistPawn', 'wall-standalone'],
+    ['protagonistPawn', 'tree'],
+  ]),
   collisionResolve,
   movement,
   acceleration,

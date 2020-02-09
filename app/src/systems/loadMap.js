@@ -43,18 +43,11 @@ export default function loadMap({ gameEvents, createEntity }: SystemInput) {
   gameEvents.forEach(event => {
     if (event.type === 'load-map' && event.payload) {
       const { entities } = event.payload;
-      const entityTypesToLoad = [
-        'tree',
-        'wall-standalone',
-        'pawn',
-        'protagonistPawn',
-        'floor',
-      ];
+      const entityTypesToLoad = ['tree', 'wall-standalone', 'pawn', 'protagonistPawn', 'floor'];
       const entitiesToLoad = entities
         .filter(
           entity =>
-            entityTypesToLoad.includes(entity['@type']) &&
-            Object.keys(entityDeSerializer).includes(entity['@type']),
+            entityTypesToLoad.includes(entity['@type']) && Object.keys(entityDeSerializer).includes(entity['@type']),
         )
         .map(entity => entityDeSerializer[entity['@type']](entity));
 

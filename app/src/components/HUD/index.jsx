@@ -29,10 +29,7 @@ const mapState = ({ debug: { inDebugMode } }) => ({
   inDebugMode,
 });
 
-const mapDispatch = ({
-  debug: { toggleDebugMode },
-  dialog: { toggleDialog },
-}) => ({
+const mapDispatch = ({ debug: { toggleDebugMode }, dialog: { toggleDialog } }) => ({
   toggleDebugMode,
   toggleDialog,
 });
@@ -60,18 +57,12 @@ export default connect(
           </Popover>
           <NavbarDivider />
           <Button
-            onClick={() =>
-              props.dispatchGameEvent({ type: 'spawn-protagonist-pawn' })
-            }
+            onClick={() => props.dispatchGameEvent({ type: 'spawn-protagonist-pawn' })}
             className={Classes.MINIMAL}
             icon="user"
             text="Spawn Protagonist"
           />
-          <DebugSwitch
-            checked={props.inDebugMode}
-            label="Debug"
-            onChange={props.toggleDebugMode}
-          />
+          <DebugSwitch checked={props.inDebugMode} label="Debug" onChange={props.toggleDebugMode} />
         </NavbarGroup>
         <NavbarGroup align={Alignment.RIGHT}>
           <Button className={Classes.MINIMAL} icon="cog" />

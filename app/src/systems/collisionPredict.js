@@ -7,10 +7,7 @@ import type { SystemInput } from 'systems/typing';
 export default function collisionPredict(collisionFilter: string[][]) {
   function shouldCollide(entityA, entityB) {
     for (const [a, b] of collisionFilter) {
-      if (
-        (entityA['@type'] === a && entityB['@type'] === b) ||
-        (entityA['@type'] === b && entityB['@type'] === a)
-      ) {
+      if ((entityA['@type'] === a && entityB['@type'] === b) || (entityA['@type'] === b && entityB['@type'] === a)) {
         return true;
       }
     }
@@ -26,24 +23,15 @@ export default function collisionPredict(collisionFilter: string[][]) {
       if ('collider' in entity && 'position' in entity) {
         entity.collider.collidingWith = [];
 
-        const colliderDiagonalHalf = vScale(0.5, [
-          entity.collider.width,
-          entity.collider.height,
-        ]);
+        const colliderDiagonalHalf = vScale(0.5, [entity.collider.width, entity.collider.height]);
         if ('velocity' in entity) {
-          const predictMovePosition = vAdd(
-            entity.position,
-            vScale(timeDiff, entity.velocity),
-          );
+          const predictMovePosition = vAdd(entity.position, vScale(timeDiff, entity.velocity));
           boxes.push([
             ...vSub(predictMovePosition, colliderDiagonalHalf),
             ...vAdd(predictMovePosition, colliderDiagonalHalf),
           ]);
         } else {
-          boxes.push([
-            ...vSub(entity.position, colliderDiagonalHalf),
-            ...vAdd(entity.position, colliderDiagonalHalf),
-          ]);
+          boxes.push([...vSub(entity.position, colliderDiagonalHalf), ...vAdd(entity.position, colliderDiagonalHalf)]);
         }
         entityIndies.push(index);
       }

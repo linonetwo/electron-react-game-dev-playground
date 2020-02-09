@@ -21,9 +21,7 @@ const mapState = ({ debug: { inDebugMode } }) => ({
   inDebugMode,
 });
 type PropFromRedux = { inDebugMode: boolean };
-export default connect(mapState)(function Tree(
-  props: TreeProps & PropFromRedux,
-) {
+export default connect(mapState)(function Tree(props: TreeProps & PropFromRedux) {
   return (
     <Container>
       <Sprite

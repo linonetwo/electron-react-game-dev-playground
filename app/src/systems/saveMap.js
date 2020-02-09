@@ -7,9 +7,7 @@ export default function saveMap({ entities, gameEvents }: SystemInput) {
       const { name } = event.payload;
 
       const entityTypesToSave = ['tree', 'wall-standalone', 'floor', 'pawn', 'protagonistPawn'];
-      const entitiesToSave = entities.filter(entity =>
-        entityTypesToSave.includes(entity['@type']),
-      );
+      const entitiesToSave = entities.filter(entity => entityTypesToSave.includes(entity['@type']));
 
       const mapData = {
         name,

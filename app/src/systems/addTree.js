@@ -22,16 +22,10 @@ export default function addTree({ createEntity, gameEvents }: SystemInput) {
           '@type': 'tree',
           Renderer: (props: TreeProps) => <Tree {...props} />,
           renderable: true,
-          name: `${randomTreeDetailName} ${String(Math.random()).substring(
-            2,
-            6,
-          )}`,
+          name: `${randomTreeDetailName} ${String(Math.random()).substring(2, 6)}`,
           textureName: randomTreeDetailName,
           collider: { type: 'block', width: 100, height: 100 },
-          position: [
-            Math.floor(Math.random() * index * 100),
-            Math.floor(Math.random() * index * 100),
-          ],
+          position: [Math.floor(Math.random() * index * 100), Math.floor(Math.random() * index * 100)],
         };
         createEntity(treeEntity);
       }

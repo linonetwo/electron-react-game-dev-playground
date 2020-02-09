@@ -39,9 +39,7 @@ const mimeTypes = {
 };
 
 function charset(mimeType) {
-  return ['.html', '.htm', '.js', '.mjs'].some(m => m === mimeType)
-    ? 'utf-8'
-    : null;
+  return ['.html', '.htm', '.js', '.mjs'].some(m => m === mimeType) ? 'utf-8' : null;
 }
 
 function mime(filename) {
