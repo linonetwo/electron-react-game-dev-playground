@@ -94,7 +94,4 @@ app/dist/
 # Packed apps
 dist/
 
-# VSCode specific
-.vscode/
-
 resources/saves

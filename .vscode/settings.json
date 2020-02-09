@@ -1,0 +1,16 @@
+{
+  "path-intellisense.mappings": {
+    "~": "${workspaceRoot}/app/src",
+    "constants": "${workspaceRoot}/app/src/constants",
+    "components": "${workspaceRoot}/app/src/components",
+    "systems": "${workspaceRoot}/app/src/systems"
+  },
+  "cSpell.words": [
+    "blueprintjs",
+    "debuff",
+    "octo",
+    "pixi",
+    "protocolbuffer",
+    "renderable"
+  ]
+}
