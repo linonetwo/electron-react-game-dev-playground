@@ -1,6 +1,6 @@
 // @flow
 import boxIntersect from 'box-intersect';
-import { vAdd } from 'vec-la-fp';
+import { vAdd, vSub, vScale } from 'vec-la-fp';
 
 import type { SystemInput } from 'systems/typing';
 
@@ -17,31 +17,32 @@ export default function collisionPredict(collisionFilter: string[][]) {
     return false;
   }
 
-  return ({ entities }: SystemInput) => {
+  return ({ entities, timeDiff }: SystemInput) => {
     const boxes = [];
     const entityIndies: Array<number> = [];
 
     for (let index = 0; index < entities.length; index += 1) {
       const entity = entities[index];
-      if (entity.renderable && 'collider' in entity && 'position' in entity) {
+      if ('collider' in entity && 'position' in entity) {
         entity.collider.collidingWith = [];
+
+        const colliderDiagonalHalf = vScale(0.5, [
+          entity.collider.width,
+          entity.collider.height,
+        ]);
         if ('velocity' in entity) {
+          const predictMovePosition = vAdd(
+            entity.position,
+            vScale(timeDiff, entity.velocity),
+          );
           boxes.push([
-            ...vAdd(entity.position, entity.velocity),
-            ...vAdd(
-              vAdd(entity.position, [
-                entity.collider.width,
-                entity.collider.height,
-              ]),
-              entity.velocity,
-            ),
+            ...vSub(predictMovePosition, colliderDiagonalHalf),
+            ...vAdd(predictMovePosition, colliderDiagonalHalf),
           ]);
         } else {
           boxes.push([
-            entity.position[0],
-            entity.position[1],
-            entity.position[0] + entity.collider.width,
-            entity.position[1] + entity.collider.height,
+            ...vSub(entity.position, colliderDiagonalHalf),
+            ...vAdd(entity.position, colliderDiagonalHalf),
           ]);
         }
         entityIndies.push(index);

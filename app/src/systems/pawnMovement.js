@@ -1,7 +1,10 @@
 /* eslint-disable no-param-reassign */
+// @flow
 import { vAdd, vScale } from 'vec-la-fp';
 
-export default function pawnMovement({ entities, keysDown }) {
+import type { SystemInput } from 'systems/typing';
+
+export default function pawnMovement({ entities, keysDown }: SystemInput) {
   entities
     .filter(
       entity =>
@@ -12,6 +15,7 @@ export default function pawnMovement({ entities, keysDown }) {
     )
     .forEach(entity => {
       let moveVelocity = [0, 0];
+      const friction = 100;
       const acceleration = entity.baseMoveSpeed;
       if (keysDown.includes('ArrowLeft')) {
         moveVelocity = vAdd(moveVelocity, [-acceleration, 0]);
@@ -26,6 +30,6 @@ export default function pawnMovement({ entities, keysDown }) {
         moveVelocity = vAdd(moveVelocity, [0, acceleration]);
       }
       entity.velocity = vAdd(entity.velocity, moveVelocity);
-      entity.acceleration = vScale(-1, entity.velocity);
+      entity.acceleration = vScale(-1 * friction, entity.velocity);
     });
 }

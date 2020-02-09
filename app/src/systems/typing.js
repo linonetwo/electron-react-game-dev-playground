@@ -13,6 +13,8 @@ export type SystemInput = {
   createEntity: IEntity => void,
   gameEvents: IEvent[],
   keysDown: string[],
+  elapsedTime: number,
+  timeDiff: number,
 };
 
 export type DispatchGameEvent = IEvent => void;

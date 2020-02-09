@@ -1,5 +1,5 @@
 // @flow
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef } from 'react';
 import {
   useEntityComponentSystem,
   useGameLoop,
@@ -21,13 +21,17 @@ export default function useGame(
   const { dispatchGameEvent, flushGameEvents } = useGameEvents();
   const keysDown = useKeysDown();
 
+  const lastTickTimeStamp = useRef(0)
   const handleFrame = useCallback(
     (elapsedTime, gameLoop) => {
+      const timeDiff = (gameLoop.current.now() - lastTickTimeStamp.current) / 1000;
+      lastTickTimeStamp.current = gameLoop.current.now();
       updater({
         gameEvents: flushGameEvents(),
         dispatchGameEvent,
         keysDown: keysDown.current,
         elapsedTime,
+        timeDiff,
         gameLoop,
       });
     },
