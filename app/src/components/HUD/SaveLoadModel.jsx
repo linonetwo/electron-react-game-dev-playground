@@ -55,20 +55,48 @@ export default connect(
         onClose={toggleSaveDialog}
         title="Save As..."
         isOpen={props.saveDialogOpen}
+        onOpened={() => {
+          loadAllLoadableSave();
+        }}
       >
         <div className={Classes.DIALOG_BODY}>
-          <FormGroup
-            helperText="Choose a name for your save"
-            label="Name"
-            labelFor="text-input"
-            labelInfo="(required)"
-          >
-            <InputGroup
-              id="text-input"
-              placeholder="save name"
-              onChange={event => saveNameSetter(event.target.value)}
-            />
-          </FormGroup>
+          <Suggest
+            items={loadableSave}
+            inputValueRenderer={(item: ISaveMetadata) => item.name}
+            noResults={<MenuItem disabled text="No results." />}
+            onItemSelect={(item: ISaveMetadata) => {
+              saveNameSetter(item.name);
+            }}
+            createNewItemFromQuery={query => ({
+              chunk: [],
+              name: query,
+              playTime: new Date(0),
+              saveTime: Date.now(),
+            })}
+            createNewItemRenderer={(query: string, active: boolean, handleClick) => {
+              return (
+                <MenuItem
+                  label={`new Save ${query}`}
+                  key={query}
+                  onClick={handleClick}
+                  text={query}
+                />
+              );
+            }}
+            itemRenderer={(item: ISaveMetadata, { handleClick }) => {
+              return (
+                <MenuItem
+                  label={`Last played: ${formatDistance(
+                    new Date(item.saveTime),
+                    new Date(),
+                  )} ago (${formatDistance(item.playTime, 0)})`}
+                  key={item.name}
+                  onClick={handleClick}
+                  text={item.name}
+                />
+              );
+            }}
+          />
         </div>
 
         <div className={Classes.DIALOG_FOOTER}>
@@ -78,7 +106,7 @@ export default connect(
             </Tooltip>
             <Button
               intent={Intent.PRIMARY}
-              onClick={() => {
+              onClick={async () => {
                 props.dispatchGameEvent({
                   type: 'save-map',
                   payload: { name: saveName },
