@@ -13,6 +13,7 @@ import saveMap from './saveMap';
 import loadMap from './loadMap';
 import collisionPredict from './collisionPredict';
 import collisionResolve from './collisionResolve';
+import cullObjectOutsideCamera from './cullObjectOutsideCamera';
 
 export const initialSystems = [
   pawnMovement,
@@ -30,4 +31,5 @@ export const initialSystems = [
   camera,
   saveMap,
   loadMap,
+  cullObjectOutsideCamera,
 ];

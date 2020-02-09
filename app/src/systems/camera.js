@@ -2,10 +2,15 @@
 import { vScale, vSub, vAdd } from 'vec-la-fp';
 import type { SystemInput } from 'systems/typing';
 
-export default function camera({ entities, keysDown }: SystemInput) {
+export default function camera({
+  entities,
+  keysDown,
+  gameEvents,
+}: SystemInput) {
   const cameraEntity = entities.find(e => e['@type'] === 'camera');
   const protagonistPawn = entities.find(e => e['@type'] === 'protagonistPawn');
   if (cameraEntity) {
+    // handle camera move
     if (protagonistPawn) {
       // with protagonist, we center our view around the character
       cameraEntity.position = vAdd(
@@ -30,5 +35,14 @@ export default function camera({ entities, keysDown }: SystemInput) {
       cameraEntity.velocity = vAdd(cameraEntity.velocity, moveVelocity);
       cameraEntity.acceleration = vScale(-1, cameraEntity.velocity);
     }
+
+    // handle window resize
+    gameEvents.forEach(event => {
+      if (event.type === 'resize-window' && event.payload) {
+        const { width, height } = event.payload;
+        cameraEntity.width = width;
+        cameraEntity.height = height;
+      }
+    });
   }
 }

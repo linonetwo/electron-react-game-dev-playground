@@ -25,6 +25,7 @@ export default function addFloorTile({
         const tile: FloorPropsWithRenderer = {
           '@type': 'floor',
           Renderer: (props: FloorProps) => <Floor {...props} />,
+          renderable: true,
           width: 64,
           height: 64,
           textureName: randomFloorName,

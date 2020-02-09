@@ -21,6 +21,7 @@ export default function addTree({ createEntity, gameEvents }: SystemInput) {
         const treeEntity: TreePropsWithRenderer = {
           '@type': 'tree',
           Renderer: (props: TreeProps) => <Tree {...props} />,
+          renderable: true,
           name: `${randomTreeDetailName} ${String(Math.random()).substring(
             2,
             6,

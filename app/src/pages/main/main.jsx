@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Stage } from 'react-pixi-fiber';
 import { ReactReduxContext, Provider } from 'react-redux';
+import { useWindowResize } from 'beautiful-react-hooks';
 
 import HUD from 'components/HUD';
 import ContextMenu from 'components/ContextMenu';
@@ -36,6 +37,15 @@ export default function Main() {
   const entitiesUnderMouse = entitiesUnderMouseEntity
     ? entitiesUnderMouseEntity.entities
     : [];
+
+  // handle window resize
+  useWindowResize(() => {
+    const windowResizeEvent: IEvent = {
+      type: 'resize-window',
+      payload: { width: window.innerWidth, height: window.innerHeight },
+    };
+    dispatchGameEvent(windowResizeEvent);
+  });
 
   return (
     <Container id={containerID}>

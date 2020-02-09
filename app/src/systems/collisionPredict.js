@@ -23,7 +23,7 @@ export default function collisionPredict(collisionFilter: string[][]) {
 
     for (let index = 0; index < entities.length; index += 1) {
       const entity = entities[index];
-      if ('collider' in entity && 'position' in entity) {
+      if (entity.renderable && 'collider' in entity && 'position' in entity) {
         entity.collider.collidingWith = [];
         if ('velocity' in entity) {
           boxes.push([
