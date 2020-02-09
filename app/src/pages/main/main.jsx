@@ -8,7 +8,7 @@ import HUD from 'components/HUD';
 import ContextMenu from 'components/ContextMenu';
 import { initialSystems } from '~/systems';
 import type { IEvent } from '~/systems/typing';
-import { initialEntities } from '~/entites';
+import { initialEntities } from '~/entities';
 import useGame from '~/useGame';
 
 const Container = styled.div`
@@ -45,7 +45,7 @@ export default function Main() {
           {({ store }) => (
             <Stage
               // follow the camera
-              pivot={{ x: cameraEntity.x, y: cameraEntity.y }}
+              pivot={{ x: cameraEntity.position[0], y: cameraEntity.position[1] }}
               // center the camera
               position={{ x: window.innerWidth / 2, y: window.innerHeight / 2 }}
               options={{

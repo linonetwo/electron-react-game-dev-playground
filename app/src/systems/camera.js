@@ -1,4 +1,5 @@
 // @flow
+import { vScale, vSub, vAdd } from 'vec-la-fp';
 import type { SystemInput } from 'systems/typing';
 
 export default function camera({ entities, keysDown }: SystemInput) {
@@ -7,22 +8,27 @@ export default function camera({ entities, keysDown }: SystemInput) {
   if (cameraEntity) {
     if (protagonistPawn) {
       // with protagonist, we center our view around the character
-      cameraEntity.x += Math.floor((protagonistPawn.x - cameraEntity.x) / 2);
-      cameraEntity.y += Math.floor((protagonistPawn.y - cameraEntity.y) / 2);
+      cameraEntity.position = vAdd(
+        cameraEntity.position,
+        vScale(0.5, vSub(protagonistPawn.position, cameraEntity.position)),
+      );
     } else {
-      // without protagonist, we follow the arrow keys
+      let moveVelocity = [0, 0];
+      const acceleration = cameraEntity.baseMoveSpeed;
       if (keysDown.includes('ArrowLeft')) {
-        cameraEntity.x -= 8;
+        moveVelocity = vAdd(moveVelocity, [-acceleration, 0]);
       }
       if (keysDown.includes('ArrowRight')) {
-        cameraEntity.x += 8;
+        moveVelocity = vAdd(moveVelocity, [acceleration, 0]);
       }
       if (keysDown.includes('ArrowUp')) {
-        cameraEntity.y -= 8;
+        moveVelocity = vAdd(moveVelocity, [0, -acceleration]);
       }
       if (keysDown.includes('ArrowDown')) {
-        cameraEntity.y += 8;
+        moveVelocity = vAdd(moveVelocity, [0, acceleration]);
       }
+      cameraEntity.velocity = vAdd(cameraEntity.velocity, moveVelocity);
+      cameraEntity.acceleration = vScale(-1, cameraEntity.velocity);
     }
   }
 }

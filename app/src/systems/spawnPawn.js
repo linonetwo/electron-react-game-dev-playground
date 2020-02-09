@@ -5,6 +5,7 @@ import type { PawnProps, PawnPropsWithRenderer } from 'components/pawn';
 
 import type { SystemInput } from 'systems/typing';
 import { resources } from '~/resourcePool';
+import moveableRigidBody from '~/entities/components/moveableRigidBody'
 
 function randomItem(items) {
   return items[Math.floor(Math.random() * items.length)];
@@ -22,8 +23,7 @@ export default function spawnPawn({ createEntity, gameEvents }: SystemInput) {
         '@type': event.type === 'spawn-pawn' ? 'pawn' : 'protagonistPawn',
         name: `ID${String(Math.random()).substring(2, 6)}`,
         Renderer: (props: PawnProps) => <Pawn {...props} />,
-        x: 200,
-        y: 200,
+        ...moveableRigidBody,
         baseMoveSpeed: 10,
         collider: { type: 'block', width: 160, height: 160 },
         facing: 'south',

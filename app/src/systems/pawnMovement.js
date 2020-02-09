@@ -1,19 +1,31 @@
 /* eslint-disable no-param-reassign */
+import { vAdd, vScale } from 'vec-la-fp';
+
 export default function pawnMovement({ entities, keysDown }) {
   entities
-    .filter(e => e['@type'] === 'protagonistPawn')
-    .forEach(pawn => {
+    .filter(
+      entity =>
+        entity['@type'] === 'protagonistPawn' &&
+        'velocity' in entity &&
+        'acceleration' in entity &&
+        'baseMoveSpeed' in entity,
+    )
+    .forEach(entity => {
+      let moveVelocity = [0, 0];
+      const acceleration = entity.baseMoveSpeed;
       if (keysDown.includes('ArrowLeft')) {
-        pawn.x -= pawn.baseMoveSpeed;
+        moveVelocity = vAdd(moveVelocity, [-acceleration, 0]);
       }
       if (keysDown.includes('ArrowRight')) {
-        pawn.x += pawn.baseMoveSpeed;
+        moveVelocity = vAdd(moveVelocity, [acceleration, 0]);
       }
       if (keysDown.includes('ArrowUp')) {
-        pawn.y -= pawn.baseMoveSpeed;
+        moveVelocity = vAdd(moveVelocity, [0, -acceleration]);
       }
       if (keysDown.includes('ArrowDown')) {
-        pawn.y += pawn.baseMoveSpeed;
+        moveVelocity = vAdd(moveVelocity, [0, acceleration]);
       }
+      entity.velocity = vAdd(entity.velocity, moveVelocity);
+      entity.acceleration = vScale(-1, entity.velocity);
     });
 }

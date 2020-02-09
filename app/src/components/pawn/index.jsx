@@ -4,9 +4,9 @@ import { Sprite, Container, Text } from 'react-pixi-fiber';
 import * as PIXI from 'pixi.js';
 import { connect } from 'react-redux';
 
-import { resources } from '~/resourcePool';
-
 import ColliderBoxDebug from 'components/Debug/ColliderBoxDebug';
+import { resources } from '~/resourcePool';
+import type { IMoveableRigidBody } from '~/entities/components/moveableRigidBody';
 
 const centerAnchor = new PIXI.Point(0.5, 0.5);
 
@@ -34,10 +34,8 @@ export type PawnProps = {
     |},
   |},
   collider: { type: string, width: number, height: number },
-  x: number,
-  y: number,
   baseMoveSpeed: number,
-};
+} & IMoveableRigidBody;
 
 function flipTexture(texture: PIXI.Texture) {
   return new PIXI.Texture(texture, texture.frame, null, null, 12);
@@ -66,8 +64,8 @@ export default connect(mapState)(function Pawn(
         width={props.collider.width}
         height={props.collider.height}
         anchor={centerAnchor}
-        x={props.x}
-        y={props.y}
+        x={props.position[0]}
+        y={props.position[1]}
         texture={
           flipLeftRight
             ? resources.getTexture(
@@ -82,8 +80,8 @@ export default connect(mapState)(function Pawn(
         width={props.collider.width}
         height={props.collider.height}
         anchor={centerAnchor}
-        x={props.x}
-        y={props.y - headHeight}
+        x={props.position[0]}
+        y={props.position[1] - headHeight}
         texture={
           flipLeftRight
             ? resources.getTexture(
@@ -98,8 +96,8 @@ export default connect(mapState)(function Pawn(
         width={props.collider.width}
         height={props.collider.height}
         anchor={centerAnchor}
-        x={props.x}
-        y={props.y - headHeight}
+        x={props.position[0]}
+        y={props.position[1] - headHeight}
         texture={
           flipLeftRight
             ? resources.getTexture(
@@ -113,14 +111,14 @@ export default connect(mapState)(function Pawn(
       {props.inDebugMode && (
         <>
           <Text
-            text={`x: ${props.x} y: ${props.y}`}
+            text={`x: ${props.position[0]} y: ${props.position[1]}`}
             style={{ fill: 'white', align: 'center' }}
-            x={props.x - props.collider.width / 2}
-            y={props.y - props.collider.height / 2}
+            x={props.position[0] - props.collider.width / 2}
+            y={props.position[1] - props.collider.height / 2}
           />
           <ColliderBoxDebug
-            x={props.x - props.collider.width / 2}
-            y={props.y - props.collider.height / 2}
+            x={props.position[0] - props.collider.width / 2}
+            y={props.position[1] - props.collider.height / 2}
             width={props.collider.width}
             height={props.collider.height}
             lineStyle={{ color: 0x66ccff }}

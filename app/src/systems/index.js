@@ -1,4 +1,5 @@
 import movement from './movement';
+import acceleration from './acceleration';
 import pawnMovement from './pawnMovement';
 import pawnFacingTurningWhenMove from './pawnFacingTurningWhenMove';
 import spawnPawn from './spawnPawn';
@@ -10,10 +11,13 @@ import addWall from './addWall';
 import camera from './camera';
 import saveMap from './saveMap';
 import loadMap from './loadMap';
+import collisionPredict from './collisionPredict';
+import collisionResolve from './collisionResolve';
 
 export const initialSystems = [
-  movement,
   pawnMovement,
+  movement,
+  acceleration,
   spawnPawn,
   pawnFacingTurningWhenMove,
   listEntityUnderMouse,
@@ -24,4 +28,6 @@ export const initialSystems = [
   camera,
   saveMap,
   loadMap,
+  collisionPredict,
+  collisionResolve,
 ];
