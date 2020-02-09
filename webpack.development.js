@@ -18,6 +18,12 @@ module.exports = merge(base, {
       ignored: /node_modules/, // Ignore this path, probably not needed since we define contentBase above
     },
   },
+  resolve: {
+    alias: {
+      'react-dom$': 'react-dom/profiling',
+      'scheduler/tracing': 'scheduler/tracing-profiling',
+    },
+  },
   plugins: [
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, 'app/src/index.html'),
