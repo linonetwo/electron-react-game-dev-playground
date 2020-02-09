@@ -6,10 +6,9 @@ message MapChunk {
   message Entity {
     string type = 0;
     // entity position
-    int32 x = 1;
-    int32 y = 2;
+    repeated float position = 1;
     // JSON.stringify result of {...rest }
-    string rest = 3;
+    string rest = 2;
   }
   repeated Entity entities = 2;
 }

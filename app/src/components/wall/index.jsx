@@ -6,21 +6,17 @@ import { connect } from 'react-redux';
 
 import ColliderBoxDebug from 'components/Debug/ColliderBoxDebug';
 import { resources } from '~/resourcePool';
+import type { IRigidBody } from '~/entities/components/rigidBody';
 
 const centerAnchor = new PIXI.Point(0.5, 0.5);
 
-export type IWall = {
-  '@type': string,
-  name: string,
-  x: number,
-  y: number,
-  collider: { type: string, width: number, height: number },
-  texture: string,
-};
+export type IWall = {};
 export type WallProps = {
   '@type': string,
-  walls: IWall[],
-};
+  name: string,
+  collider: { type: string, width: number, height: number },
+  textureName: string,
+} & IRigidBody;
 export type WallPropsWithRenderer = WallProps & { Renderer: Function };
 
 function getWallTexturePart(type: string) {
@@ -40,39 +36,35 @@ export default connect(mapState)(function Wall(
 ) {
   return (
     <Container>
-      {props.walls.map(wall => (
+      <Sprite
+        texture={resources.getTexture(
+          `${props.textureName}_${props['@type']}`,
+          getWallTexturePart(props['@type']),
+          props.textureName,
+        )}
+        x={props.position[0]}
+        y={props.position[1]}
+        width={props.collider.width}
+        height={props.collider.height}
+        anchor={centerAnchor}
+      />
+      {props.inDebugMode && (
         <>
-          <Sprite
-            texture={resources.getTexture(
-              `${wall.texture}_${wall['@type']}`,
-              getWallTexturePart(wall['@type']),
-              wall.texture,
-            )}
-            x={wall.x}
-            y={wall.y}
-            width={wall.collider.width}
-            height={wall.collider.height}
-            anchor={centerAnchor}
+          <Text
+            text={`${props.name} x: ${props.position[0]} y: ${props.position[1]}`}
+            style={{ fill: 'white', align: 'center' }}
+            x={props.position[0]}
+            y={props.position[1]}
           />
-          {props.inDebugMode && (
-            <>
-              <Text
-                text={`${wall.name} x: ${wall.x} y: ${wall.y}`}
-                style={{ fill: 'white', align: 'center' }}
-                x={wall.x}
-                y={wall.y}
-              />
-              <ColliderBoxDebug
-                x={wall.x - wall.collider.width / 2}
-                y={wall.y - wall.collider.height / 2}
-                width={wall.collider.width}
-                height={wall.collider.height}
-                lineStyle={{ color: 0x66ccff }}
-              />
-            </>
-          )}
+          <ColliderBoxDebug
+            x={props.position[0] - props.collider.width / 2}
+            y={props.position[1] - props.collider.height / 2}
+            width={props.collider.width}
+            height={props.collider.height}
+            lineStyle={{ color: 0x66ccff }}
+          />
         </>
-      ))}
+      )}
     </Container>
   );
 });

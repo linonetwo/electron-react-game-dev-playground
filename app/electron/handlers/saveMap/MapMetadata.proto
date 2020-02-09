@@ -4,7 +4,7 @@ message MapMetadata {
   string name = 1;
   string saveTime = 2;
   int32 playTime = 3;
-  
+
   message MapChunkMetadata {
     // center of the map
     int32 anchorX = 1;

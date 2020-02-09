@@ -9,16 +9,12 @@ import { resources } from '~/resourcePool';
 import type { IRigidBody } from '~/entities/components/rigidBody';
 
 const centerAnchor = new PIXI.Point(0.5, 0.5);
-
-export type ITree = {
-  name: string,
-  collider: { type: string, width: number, height: number },
-  texture: string,
-} & IRigidBody;
 export type TreeProps = {
   '@type': string,
-  tree: ITree[],
-};
+  name: string,
+  collider: { type: string, width: number, height: number },
+  textureName: string,
+} & IRigidBody;
 export type TreePropsWithRenderer = TreeProps & { Renderer: Function };
 
 const mapState = ({ debug: { inDebugMode } }) => ({
@@ -30,35 +26,31 @@ export default connect(mapState)(function Tree(
 ) {
   return (
     <Container>
-      {props.tree.map(tree => (
+      <Sprite
+        texture={resources.getTexture(props.textureName)}
+        x={props.position[0]}
+        y={props.position[1]}
+        width={props.collider.width}
+        height={props.collider.height}
+        anchor={centerAnchor}
+      />
+      {props.inDebugMode && (
         <>
-          <Sprite
-            texture={resources.getTexture(tree.texture)}
-            x={tree.position[0]}
-            y={tree.position[1]}
-            width={tree.collider.width}
-            height={tree.collider.height}
-            anchor={centerAnchor}
+          <Text
+            text={`${props.name} x: ${props.position[0]} y: ${props.position[1]}`}
+            style={{ fill: 'white', align: 'center' }}
+            x={props.position[0]}
+            y={props.position[1]}
           />
-          {props.inDebugMode && (
-            <>
-              <Text
-                text={`${tree.name} x: ${tree.position[0]} y: ${tree.position[1]}`}
-                style={{ fill: 'white', align: 'center' }}
-                x={tree.position[0]}
-                y={tree.position[1]}
-              />
-              <ColliderBoxDebug
-                x={tree.position[0] - tree.collider.width / 2}
-                y={tree.position[1] - tree.collider.height / 2}
-                width={tree.collider.width}
-                height={tree.collider.height}
-                lineStyle={{ color: 0x66ccff }}
-              />
-            </>
-          )}
+          <ColliderBoxDebug
+            x={props.position[0] - props.collider.width / 2}
+            y={props.position[1] - props.collider.height / 2}
+            width={props.collider.width}
+            height={props.collider.height}
+            lineStyle={{ color: 0x66ccff }}
+          />
         </>
-      ))}
+      )}
     </Container>
   );
 });

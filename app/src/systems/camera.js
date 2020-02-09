@@ -14,7 +14,7 @@ export default function camera({ entities, keysDown }: SystemInput) {
       );
     } else {
       let moveVelocity = [0, 0];
-      const acceleration = cameraEntity.baseMoveSpeed;
+      const acceleration = 20;
       if (keysDown.includes('ArrowLeft')) {
         moveVelocity = vAdd(moveVelocity, [-acceleration, 0]);
       }

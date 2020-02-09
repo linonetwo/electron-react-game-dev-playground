@@ -4,6 +4,7 @@ const fs = require('fs').promises;
 const sub = require('date-fns/sub');
 const add = require('date-fns/add');
 const getTime = require('date-fns/getTime');
+const { original } = require('immer');
 
 const { ensureSaveDir } = require('./getSaveDir');
 
@@ -44,10 +45,9 @@ async function saveMapChunk(mapName, entities) {
   const chunkID = 0;
   const mapChunk = {
     id: chunkID,
-    entities: entities.map(({ '@type': type, x, y, ...rest }) => ({
+    entities: entities.map(({ '@type': type, position, ...rest }) => ({
       type,
-      x,
-      y,
+      position: [position[0], position[1]],
       rest: JSON.stringify(rest),
     })),
   };

@@ -3,24 +3,19 @@ import React, { useCallback } from 'react';
 import { Sprite, Container, Text } from 'react-pixi-fiber';
 import * as PIXI from 'pixi.js';
 import { connect } from 'react-redux';
+import type { IRigidBody } from '~/entities/components/rigidBody';
 
 import { resources } from '~/resourcePool';
 
 const centerAnchor = new PIXI.Point(0.5, 0.5);
 
-export type IFloorTile = {
-  name: string,
-  texture: string,
-  x: number,
-  y: number,
-};
 export type FloorProps = {
   '@type': string,
-  tiles: IFloorTile[],
-  // width and height of each tile
+  name: string,
+  textureName: string,
   width: number,
   height: number,
-};
+} & IRigidBody;
 export type FloorPropsWithRenderer = FloorProps & { Renderer: Function };
 
 const mapState = ({ debug: { inDebugMode } }) => ({
@@ -41,26 +36,22 @@ export default connect(mapState)(function Floor(
   );
   return (
     <Container>
-      {props.tiles.map(tile => (
-        <>
-          <Sprite
-            texture={resources.getTexture(tile.texture, trimTileTexture)}
-            x={tile.x}
-            y={tile.y}
-            width={props.width}
-            height={props.height}
-            anchor={centerAnchor}
-          />
-          {props.inDebugMode && (
-            <Text
-              text={`${tile.name} x: ${tile.x} y: ${tile.y}`}
-              style={{ fill: 'white', align: 'center' }}
-              x={tile.x}
-              y={tile.y}
-            />
-          )}
-        </>
-      ))}
+      <Sprite
+        texture={resources.getTexture(props.textureName, trimTileTexture)}
+        x={props.position[0]}
+        y={props.position[1]}
+        width={props.width}
+        height={props.height}
+        anchor={centerAnchor}
+      />
+      {props.inDebugMode && (
+        <Text
+          text={`${props.name} x: ${props.position[0]} y: ${props.position[1]}`}
+          style={{ fill: 'white', align: 'center' }}
+          x={props.position[0]}
+          y={props.position[1]}
+        />
+      )}
     </Container>
   );
 });

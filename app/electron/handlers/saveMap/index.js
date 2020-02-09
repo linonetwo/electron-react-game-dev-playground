@@ -58,7 +58,10 @@ ipcMain.handle('load-map-chunk', async (event, { saveName, chunkID }) => {
   );
   const MapChunk = protocolRoot.lookupType('MapChunk');
   const buffer = await fs.readFile(
-    path.join(getSaveDirPath(saveName), `${saveName}.${chunkID}.protocolbuffer`),
+    path.join(
+      getSaveDirPath(saveName),
+      `${saveName}.${chunkID}.protocolbuffer`,
+    ),
   );
 
   const message = MapChunk.decode(buffer);
@@ -68,10 +71,9 @@ ipcMain.handle('load-map-chunk', async (event, { saveName, chunkID }) => {
     throw new Error(
       `map chunk ID mismatch: mapChunkData.id=${mapChunkData.id} chunkID=${chunkID}`,
     );
-  const entities = mapChunkData.entities.map(({ type, x, y, rest }) => ({
+  const entities = mapChunkData.entities.map(({ type, position, rest }) => ({
     '@type': type,
-    x,
-    y,
+    position,
     ...JSON.parse(rest),
   }));
   return entities;

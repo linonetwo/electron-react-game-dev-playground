@@ -1,24 +1,15 @@
 // @flow
 import type { SystemInput } from 'systems/typing';
 
-const entitySerializer = {
-  tree: entity => {
-    return entity.trees.map(tree => ({ '@type': 'tree', ...tree }));
-  },
-};
 export default function saveMap({ entities, gameEvents }: SystemInput) {
   gameEvents.forEach(event => {
     if (event.type === 'save-map' && event.payload) {
       const { name } = event.payload;
 
-      const entityTypesToSave = ['tree', 'wall', 'pawn', 'protagonistPawn'];
-      const entitiesToSave = entities
-        .filter(
-          entity =>
-            entityTypesToSave.includes(entity['@type']) &&
-            Object.keys(entitySerializer).includes(entity['@type']),
-        )
-        .flatMap(entity => entitySerializer[entity['@type']](entity));
+      const entityTypesToSave = ['tree', 'wall-standalone', 'floor', 'pawn', 'protagonistPawn'];
+      const entitiesToSave = entities.filter(entity =>
+        entityTypesToSave.includes(entity['@type']),
+      );
 
       const mapData = {
         name,

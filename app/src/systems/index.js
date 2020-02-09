@@ -16,7 +16,7 @@ import collisionResolve from './collisionResolve';
 
 export const initialSystems = [
   pawnMovement,
-  collisionPredict([['protagonistPawn', 'pawn'],['protagonistPawn', 'wall'], ['protagonistPawn', 'tree']]),
+  collisionPredict([['protagonistPawn', 'pawn'],['protagonistPawn', 'wall-standalone'], ['protagonistPawn', 'tree']]),
   collisionResolve,
   movement,
   acceleration,
