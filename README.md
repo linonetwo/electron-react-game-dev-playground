@@ -2,6 +2,14 @@
 
 Play with game development with electron and react pixi.
 
+## About
+
+I learn how to create game using state-of-art Web technology in this project, see [Project1](https://github.com/linonetwo/electron-react-game-dev-playground/projects/1).
+
+Currently I'm creating a Don't Starve Together + RimWorld style game, using React + Electron + react-pixi-fiber + react-entity-component-system, and styled-components + @blueprintjs for UI.
+
+I'm also using well known Frontend packages like @rematch, react-router, babel, eslint, flowtype, webpack and so on.
+
 ## Development
 
 ### Config your editor for `babel-plugin-module-resolver`
