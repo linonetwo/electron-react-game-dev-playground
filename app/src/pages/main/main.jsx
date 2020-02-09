@@ -45,7 +45,10 @@ export default function Main() {
           {({ store }) => (
             <Stage
               // follow the camera
-              pivot={{ x: cameraEntity.position[0], y: cameraEntity.position[1] }}
+              pivot={{
+                x: cameraEntity.position[0],
+                y: cameraEntity.position[1],
+              }}
               // center the camera
               position={{ x: window.innerWidth / 2, y: window.innerHeight / 2 }}
               options={{
@@ -85,7 +88,7 @@ export default function Main() {
           type: entity['@type'],
           icon: 'people',
         }))}
-        position={mouseEntity || { x: 0, y: 0 }}
+        position={mouseEntity ? mouseEntity.position : [0, 0]}
         mountPoint={containerID}
       />
     </Container>

@@ -5,7 +5,7 @@ import type { PawnProps, PawnPropsWithRenderer } from 'components/pawn';
 
 import type { SystemInput } from 'systems/typing';
 import { resources } from '~/resourcePool';
-import moveableRigidBody from '~/entities/components/moveableRigidBody'
+import moveableRigidBody from '~/entities/components/moveableRigidBody';
 
 function randomItem(items) {
   return items[Math.floor(Math.random() * items.length)];
@@ -13,7 +13,10 @@ function randomItem(items) {
 
 export default function spawnPawn({ createEntity, gameEvents }: SystemInput) {
   gameEvents.forEach(event => {
-    if (event.type === 'spawn-pawn' || event.type === 'spawn-protagonist-pawn') {
+    if (
+      event.type === 'spawn-pawn' ||
+      event.type === 'spawn-protagonist-pawn'
+    ) {
       if (!resources.index.core) return;
       const coreIndex = resources.index.core;
       const randomHeadName = randomItem(coreIndex.heads.female);

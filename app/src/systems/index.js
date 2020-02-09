@@ -16,6 +16,8 @@ import collisionResolve from './collisionResolve';
 
 export const initialSystems = [
   pawnMovement,
+  collisionPredict([['protagonistPawn', 'pawn'],['protagonistPawn', 'wall'], ['protagonistPawn', 'tree']]),
+  collisionResolve,
   movement,
   acceleration,
   spawnPawn,
@@ -28,6 +30,4 @@ export const initialSystems = [
   camera,
   saveMap,
   loadMap,
-  collisionPredict,
-  collisionResolve,
 ];

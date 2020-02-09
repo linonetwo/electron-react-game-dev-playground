@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import ReactDOM from 'react-dom';
 import { search } from 'fast-fuzzy';
-import { Menu, MenuItem } from "@blueprintjs/core";
+import { Menu, MenuItem } from '@blueprintjs/core';
 
 export type IMenuItem = {
   title: string,
@@ -32,15 +32,12 @@ export type HoverMenuProps = {
   open?: boolean,
   mountPoint: string,
   items: IMenuItem[],
-  position: { x: ?number, y: ?number },
+  position: number[],
 };
 type HoverMenuState = {
   filter: string,
   items: IMenuItem[],
-  position: {
-    x: number,
-    y: number,
-  },
+  position: number[],
 };
 export default class HoverMenu extends Component<
   HoverMenuProps,
@@ -49,7 +46,7 @@ export default class HoverMenu extends Component<
   state = {
     filter: '',
     items: [],
-    position: { x: 0, y: 0 },
+    position: [0, 0],
   };
 
   static getDerivedStateFromProps(nextProps: HoverMenuProps) {
@@ -89,7 +86,7 @@ export default class HoverMenu extends Component<
         text={text}
         icon={item.icon}
         onMouseDown={event => this.onClickMark(item, event)}
-       />
+      />
     );
   };
 
@@ -97,8 +94,8 @@ export default class HoverMenu extends Component<
     if (this.menuRef === null) return {};
     return {
       opacity: 1,
-      top: `calc(${this.state.position.y}px)`,
-      left: `calc(${this.state.position.x}px - ${this.menuRef.offsetWidth /
+      top: `calc(${this.state.position[1]}px)`,
+      left: `calc(${this.state.position[0]}px - ${this.menuRef.offsetWidth /
         2}px)`,
     };
   };
@@ -145,10 +142,7 @@ export default class HoverMenu extends Component<
             this.menuRef = elem;
           }}
         >
-        <Menu>
-
-          {itemsToDisplay.map(this.renderMarkButton)}
-        </Menu>
+          <Menu>{itemsToDisplay.map(this.renderMarkButton)}</Menu>
           {this.state.filter}
         </MenuContainer>,
         mountPoint,

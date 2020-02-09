@@ -1,6 +1,8 @@
+// @flow
+import rigidBody from '~/entities/components/rigidBody';
+
 export default {
   '@type': 'mouse',
-  x: 0,
-  y: 0,
+  ...rigidBody,
   Renderer: () => null,
 };
