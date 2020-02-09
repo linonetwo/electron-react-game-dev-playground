@@ -6,7 +6,6 @@ import {
   Dialog,
   Intent,
   FormGroup,
-  InputGroup,
   Tooltip,
   MenuItem,
 } from '@blueprintjs/core';
@@ -60,43 +59,54 @@ export default connect(
         }}
       >
         <div className={Classes.DIALOG_BODY}>
-          <Suggest
-            items={loadableSave}
-            inputValueRenderer={(item: ISaveMetadata) => item.name}
-            noResults={<MenuItem disabled text="No results." />}
-            onItemSelect={(item: ISaveMetadata) => {
-              saveNameSetter(item.name);
-            }}
-            createNewItemFromQuery={query => ({
-              chunk: [],
-              name: query,
-              playTime: new Date(0),
-              saveTime: Date.now(),
-            })}
-            createNewItemRenderer={(query: string, active: boolean, handleClick) => {
-              return (
-                <MenuItem
-                  label={`new Save ${query}`}
-                  key={query}
-                  onClick={handleClick}
-                  text={query}
-                />
-              );
-            }}
-            itemRenderer={(item: ISaveMetadata, { handleClick }) => {
-              return (
-                <MenuItem
-                  label={`Last played: ${formatDistance(
-                    new Date(item.saveTime),
-                    new Date(),
-                  )} ago (${formatDistance(item.playTime, 0)})`}
-                  key={item.name}
-                  onClick={handleClick}
-                  text={item.name}
-                />
-              );
-            }}
-          />
+          <FormGroup
+            helperText="Choose a name for your save"
+            label="Name"
+            labelFor="text-input"
+            labelInfo="(required)"
+          >
+            <Suggest
+              items={loadableSave}
+              inputValueRenderer={(item: ISaveMetadata) => item.name}
+              noResults={<MenuItem disabled text="No results." />}
+              onItemSelect={(item: ISaveMetadata) => {
+                saveNameSetter(item.name);
+              }}
+              createNewItemFromQuery={query => ({
+                chunk: [],
+                name: query,
+                playTime: new Date(0),
+                saveTime: Date.now(),
+              })}
+              createNewItemRenderer={(
+                query: string,
+                active: boolean,
+                handleClick,
+              ) => {
+                return (
+                  <MenuItem
+                    label={`new Save ${query}`}
+                    key={query}
+                    onClick={handleClick}
+                    text={query}
+                  />
+                );
+              }}
+              itemRenderer={(item: ISaveMetadata, { handleClick }) => {
+                return (
+                  <MenuItem
+                    label={`Last played: ${formatDistance(
+                      new Date(item.saveTime),
+                      new Date(),
+                    )} ago (${formatDistance(item.playTime, 0)})`}
+                    key={item.name}
+                    onClick={handleClick}
+                    text={item.name}
+                  />
+                );
+              }}
+            />
+          </FormGroup>
         </div>
 
         <div className={Classes.DIALOG_FOOTER}>
@@ -132,27 +142,34 @@ export default connect(
         }}
       >
         <div className={Classes.DIALOG_BODY}>
-          <Suggest
-            items={loadableSave}
-            inputValueRenderer={(item: ISaveMetadata) => item.name}
-            noResults={<MenuItem disabled text="No results." />}
-            onItemSelect={(item: ISaveMetadata) => {
-              saveNameToLoadSetter(item.name);
-            }}
-            itemRenderer={(item: ISaveMetadata, { handleClick }) => {
-              return (
-                <MenuItem
-                  label={`Last played: ${formatDistance(
-                    new Date(item.saveTime),
-                    new Date(),
-                  )} ago (${formatDistance(item.playTime, 0)})`}
-                  key={item.name}
-                  onClick={handleClick}
-                  text={item.name}
-                />
-              );
-            }}
-          />
+          <FormGroup
+            helperText="Choose a save file to load"
+            label="Name"
+            labelFor="text-input"
+            labelInfo="(required)"
+          >
+            <Suggest
+              items={loadableSave}
+              inputValueRenderer={(item: ISaveMetadata) => item.name}
+              noResults={<MenuItem disabled text="No results." />}
+              onItemSelect={(item: ISaveMetadata) => {
+                saveNameToLoadSetter(item.name);
+              }}
+              itemRenderer={(item: ISaveMetadata, { handleClick }) => {
+                return (
+                  <MenuItem
+                    label={`Last played: ${formatDistance(
+                      new Date(item.saveTime),
+                      new Date(),
+                    )} ago (${formatDistance(item.playTime, 0)})`}
+                    key={item.name}
+                    onClick={handleClick}
+                    text={item.name}
+                  />
+                );
+              }}
+            />
+          </FormGroup>
         </div>
 
         <div className={Classes.DIALOG_FOOTER}>
